@@ -3,15 +3,15 @@
 typedef struct node{
     int data;
     struct node* link;
-}node;
+}node_t;
 
-typedef node* list_t;
+typedef node_t* list_t;
 
-list_t lCreate(void);
+list_t lCreate(int item);
 
-int lVisit(list_t head);
+int lDisplay(list_t head);
 
-int lInsert(list_t head, int item, int pos);
+int lInsertT(list_t head, int item);
 
 void lDelete(list_t head, int item);
 
