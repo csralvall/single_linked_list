@@ -29,7 +29,29 @@ int lVisit(list_t head) {
     return 0;
 }
 
-void lInsert(list_t head, int item);
+int lInsert(list_t head, int item, int pos) {
+    if(head == NULL) {
+        fprintf(stderr,"lInsert::WARNING - null pointer as argument.\n");
+        return 1;
+    } else {
+        list_t temp = head;
+        while(temp->link != NULL && pos--) {
+            temp = temp->link;
+        }
+        if(pos == 0) {
+            list_t ptemp = temp;
+            list_t new = lCreate();
+            new->data = item;
+            new->link = temp->link;
+            ptemp->link = new;
+        } else if(temp->link == NULL) {
+            fprintf(stderr,"lInsert::WARNING - position out of bound.\n");
+            return 1;
+        }
+    }
+
+    return 0;
+}
 
 void lDelete(list_t head, int item);
 
