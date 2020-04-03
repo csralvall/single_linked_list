@@ -11,7 +11,7 @@ list_t lCreate(void);
 
 int lVisit(list_t head);
 
-void lInsert(list_t head, int item);
+int lInsert(list_t head, int item, int pos);
 
 void lDelete(list_t head, int item);
 
