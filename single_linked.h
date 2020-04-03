@@ -13,6 +13,8 @@ int lDisplay(list_t head);
 
 int lInsertT(list_t head, int item);
 
+list_t lInsertH(list_t head, int item);
+
 void lDelete(list_t head, int item);
 
 int lSearch(list_t head, int key);
