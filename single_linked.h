@@ -9,7 +9,7 @@ typedef node* list_t;
 
 list_t lCreate(list_t head, int elem);
 
-void lVisit(list_t head);
+int lVisit(list_t head);
 
 void lInsert(list_t head, int elem);
 
