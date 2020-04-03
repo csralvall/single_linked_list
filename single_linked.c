@@ -23,7 +23,20 @@ list_t lCreate(list_t head, int elem) {
     return head;
 }
 
-void lVisit(list_t head);
+int lVisit(list_t head) {
+    if(head == NULL) {
+        fprintf(stderr,"lVisit::WARNING - null pointer as argument.\n");
+        return 1;
+    } else {
+        list_t temp = head;
+        while(temp->link != NULL) {
+            printf("[%i]->", temp->data);
+        }
+        printf("[%i]", temp->data);
+    }
+
+    return 0;
+}
 
 void lInsert(list_t head, int elem);
 
