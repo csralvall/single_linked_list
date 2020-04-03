@@ -2,19 +2,19 @@
 #include <stdio.h>
 #include "single_linked.h"
 
-list_t lCreate(void) {
-    list_t new = calloc(1, sizeof(node));
+list_t lCreate(int item) {
+    list_t new = calloc(1, sizeof(node_t));
     if(new == NULL) {
         fprintf(stderr,"lCreate::ERROR - allocation fail.\n");
         exit(1);
     }
-    new->data = 0;
+    new->data = item;
     new->link = NULL;
 
     return new;
 }
 
-int lVisit(list_t head) {
+int lDisplay(list_t head) {
     if(head == NULL) {
         fprintf(stderr,"lVisit::WARNING - null pointer as argument.\n");
         return 1;
@@ -30,25 +30,17 @@ int lVisit(list_t head) {
     return 0;
 }
 
-int lInsert(list_t head, int item, int pos) {
+int lInsertT(list_t head, int item) {
     if(head == NULL) {
         fprintf(stderr,"lInsert::WARNING - null pointer as argument.\n");
         return 1;
     } else {
         list_t temp = head;
-        while(temp->link != NULL && pos--) {
+        while(temp->link != NULL) {
             temp = temp->link;
         }
-        if(pos == 0) {
-            list_t ptemp = temp;
-            list_t new = lCreate();
-            new->data = item;
-            new->link = temp->link;
-            ptemp->link = new;
-        } else if(temp->link == NULL) {
-            fprintf(stderr,"lInsert::WARNING - position out of bound.\n");
-            return 1;
-        }
+        list_t new = lCreate(item);
+        temp->link = new;
     }
 
     return 0;
