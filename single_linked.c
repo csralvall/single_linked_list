@@ -22,6 +22,7 @@ int lVisit(list_t head) {
         list_t temp = head;
         while(temp->link != NULL) {
             printf("[%i]->", temp->data);
+            temp = temp->link;
         }
         printf("[%i]", temp->data);
     }
