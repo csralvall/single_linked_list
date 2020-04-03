@@ -32,7 +32,7 @@ int lDisplay(list_t head) {
 
 int lInsertT(list_t head, int item) {
     if(head == NULL) {
-        fprintf(stderr,"lInsert::WARNING - null pointer as argument.\n");
+        fprintf(stderr,"lInsertT::WARNING - null pointer as argument.\n");
         return 1;
     } else {
         list_t temp = head;
@@ -44,6 +44,15 @@ int lInsertT(list_t head, int item) {
     }
 
     return 0;
+}
+
+list_t lInsertH(list_t head, int item) {
+    list_t temp = head;
+    list_t new = lCreate(item);
+    new->link = temp;
+    head = new;
+
+    return head;
 }
 
 void lDelete(list_t head, int item);
