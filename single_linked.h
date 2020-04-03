@@ -5,18 +5,18 @@ typedef struct node{
     struct node* link;
 }node;
 
-typedef node* list;
+typedef node* list_t;
 
-list lCreate(void);
+list_t lCreate(list_t head, int elem);
 
-void lVisit(list l);
+void lVisit(list_t head);
 
-void lInsert(list l, int e);
+void lInsert(list_t head, int elem);
 
-void lDelete(list l, int e);
+void lDelete(list_t head, int elem);
 
-int lSearch(list l, int k);
+int lSearch(list_t head, int key);
 
-void lReverse(list l);
+void lReverse(list_t head);
 
-list lMerge(list a, list b);
+list_t lMerge(list_t a, list_t b);
