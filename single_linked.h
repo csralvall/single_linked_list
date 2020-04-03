@@ -7,7 +7,7 @@ typedef struct node{
 
 typedef node* list_t;
 
-list_t lCreate(list_t head, int elem);
+list_t lCreate(void);
 
 int lVisit(list_t head);
 
