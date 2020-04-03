@@ -29,9 +29,9 @@ int lVisit(list_t head) {
     return 0;
 }
 
-void lInsert(list_t head, int elem);
+void lInsert(list_t head, int item);
 
-void lDelete(list_t head, int elem);
+void lDelete(list_t head, int item);
 
 int lSearch(list_t head, int key);
 
