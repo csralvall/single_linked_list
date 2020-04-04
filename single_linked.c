@@ -56,13 +56,17 @@ list_t lInsertH(list_t head, int item) {
 }
 
 int lInsertPos(list_t head, int item, int pos) {
-    if(head == NULL && !pos) {
-        fprintf(stderr,"lInsertIn::ERROR - null pointer, unreachable position.\n");
-        return 0;
+    if(head == NULL) {
+        fprintf(stderr,"lInsertPos::ERROR - null pointer, list must be initialized.\n");
+        return 1;
+    } else if(pos < 0) {
+        fprintf(stderr,"lInsertPos::ERROR - pos must be greater or equal to zero.\n");
     } else {
         list_t temp = head;
-        while(temp->link != NULL && pos) {
-            temp = temp->link;
+        list_t ptemp = head;
+        while(ptemp != NULL && pos) {
+            temp = ptemp;
+            ptemp = ptemp->link;
             pos--;
         }
         if(pos == 0) {
@@ -70,12 +74,38 @@ int lInsertPos(list_t head, int item, int pos) {
             new->link = temp->link;
             temp->link = new;
         } else {
-            fprintf(stderr,"lInsertIn::ERROR - list is to short, unreachable position.\n");
-            return 0;
+            fprintf(stderr,"lInsertPos::ERROR - list is to short, unreachable position.\n");
+            return 1;
         }
     }
 
-    return 1;
+    return 0;
+}
+
+int lInsertPre(list_t head, int item, int pre) {
+    if(head == NULL) {
+        fprintf(stderr,"lInsertPre::ERROR - null pointer, unreachable position.\n");
+        return 1;
+    } else if(pre < 1) {
+        fprintf(stderr,"lInsertPre::ERROR - pre must be greater than zero.\n");
+        return 1;
+    } else {
+        list_t temp = head;
+        while(temp->link != NULL && pre != 1) {
+            temp = temp->link;
+            pre--;
+        }
+        if(pre == 1) {
+            list_t new = lCreate(item);
+            new->link = temp->link;
+            temp->link = new;
+        } else {
+            fprintf(stderr,"lInsertPre::ERROR - list is to short, unreachable position.\n");
+            return 1;
+        }
+    }
+
+    return 0;
 }
 
 void lDelete(list_t head, int item);
