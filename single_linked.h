@@ -17,6 +17,8 @@ list_t lInsertH(list_t head, int item);
 
 int lInsertPos(list_t head, int item, int pos);
 
+int lInsertPre(list_t head, int item, int pre);
+
 void lDelete(list_t head, int item);
 
 int lSearch(list_t head, int key);
