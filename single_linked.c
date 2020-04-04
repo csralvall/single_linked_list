@@ -55,6 +55,29 @@ list_t lInsertH(list_t head, int item) {
     return head;
 }
 
+int lInsertPos(list_t head, int item, int pos) {
+    if(head == NULL && !pos) {
+        fprintf(stderr,"lInsertIn::ERROR - null pointer, unreachable position.\n");
+        return 0;
+    } else {
+        list_t temp = head;
+        while(temp->link != NULL && pos) {
+            temp = temp->link;
+            pos--;
+        }
+        if(pos == 0) {
+            list_t new = lCreate(item);
+            new->link = temp->link;
+            temp->link = new;
+        } else {
+            fprintf(stderr,"lInsertIn::ERROR - list is to short, unreachable position.\n");
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
 void lDelete(list_t head, int item);
 
 int lSearch(list_t head, int key);
