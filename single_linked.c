@@ -108,7 +108,17 @@ int lInsertPre(list_t head, int item, int pre) {
     return 0;
 }
 
-void lDelete(list_t head, int item);
+list_t lDeleteH(list_t head) {
+    if(head != NULL) {
+        list_t temp = head;
+        head = head->link;
+        free(temp);
+    } else {
+        fprintf(stderr,"lDeleteH::WARNING - the list is empty.\n");
+    }
+
+    return head;
+}
 
 int lSearch(list_t head, int key);
 
