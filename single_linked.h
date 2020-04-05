@@ -21,6 +21,8 @@ int lInsertPre(list_t head, int item, int pre);
 
 list_t lDeleteH(list_t head);
 
+int lDeleteT(list_t head);
+
 int lSearch(list_t head, int key);
 
 void lReverse(list_t head);
