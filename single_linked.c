@@ -142,6 +142,33 @@ list_t lDeleteT(list_t head) {
     return head;
 }
 
+int lDeletePos(list_t head, int pos) {
+    if(head == NULL) {
+        fprintf(stderr,"lDeleteIn::ERROR - null pointer, list must be initialized.\n");
+        return 1;
+    } else if(pos < 0) {
+        fprintf(stderr,"lDeleteIn::ERROR - pos must be greater or equal to zero.\n");
+    } else {
+        list_t temp = head;
+        list_t ptemp = head;
+        while(ptemp->link != NULL && pos) {
+            temp = ptemp;
+            ptemp = ptemp->link;
+            pos--;
+        }
+        if(pos == 0) {
+            temp->link = ptemp->link;
+            free(ptemp);
+            ptemp = NULL;
+        } else {
+            fprintf(stderr,"lDeleteIn::ERROR - list is to short, unreachable position.\n");
+            return 1;
+        }
+    }
+
+    return 0;
+}
+
 int lSearch(list_t head, int key);
 
 void lReverse(list_t head);
