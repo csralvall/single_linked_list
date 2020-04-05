@@ -120,6 +120,28 @@ list_t lDeleteH(list_t head) {
     return head;
 }
 
+list_t lDeleteT(list_t head) {
+    if(head == NULL) {
+        fprintf(stderr,"lDeleteT::WARNING - the list is empty.\n");
+    } else {
+        list_t temp = head;
+        list_t ptemp = head;
+        while(ptemp->link != NULL) {
+            temp = ptemp;
+            ptemp = ptemp->link;
+        }
+        if(ptemp != head) {
+            free(ptemp);
+            temp->link = NULL;
+        } else {
+            free(ptemp);
+            head = NULL;
+        }
+    }
+
+    return head;
+}
+
 int lSearch(list_t head, int key);
 
 void lReverse(list_t head);
