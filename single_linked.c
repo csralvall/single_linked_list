@@ -169,7 +169,23 @@ int lDeletePos(list_t head, int pos) {
     return 0;
 }
 
-int lSearch(list_t head, int key);
+int lSearch(list_t head, int key) {
+    int pos = 0;
+    list_t temp = head;
+    if(head == NULL) {
+        fprintf(stderr,"lSearch::WARNING - list is empty");
+    } else {
+        while(temp != NULL && temp->data != key) {
+            temp = temp->link;
+            pos++;
+        }
+    }
+    if(temp == NULL) {
+        pos = -1;
+    }
+    return pos;
+}
+        
 
 void lReverse(list_t head);
 
