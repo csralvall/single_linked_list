@@ -144,10 +144,10 @@ list_t lDeleteT(list_t head) {
 
 int lDeletePos(list_t head, int pos) {
     if(head == NULL) {
-        fprintf(stderr,"lDeleteIn::ERROR - null pointer, list must be initialized.\n");
+        fprintf(stderr,"lDeletePos::ERROR - null pointer, list must be initialized.\n");
         return 1;
     } else if(pos < 0) {
-        fprintf(stderr,"lDeleteIn::ERROR - pos must be greater or equal to zero.\n");
+        fprintf(stderr,"lDeletePos::ERROR - pos must be greater or equal to zero.\n");
     } else {
         list_t temp = head;
         list_t ptemp = head;
@@ -161,7 +161,7 @@ int lDeletePos(list_t head, int pos) {
             free(ptemp);
             ptemp = NULL;
         } else {
-            fprintf(stderr,"lDeleteIn::ERROR - list is to short, unreachable position.\n");
+            fprintf(stderr,"lDeletePos::ERROR - list is to short, unreachable position.\n");
             return 1;
         }
     }
@@ -187,6 +187,16 @@ int lSearch(list_t head, int key) {
 }
         
 
-void lReverse(list_t head);
+list_t lReverse(list_t head) {
+    list_t pos, cur = head, pre = NULL;
+    while(cur != NULL) {
+        pos = cur->link;
+        cur->link = pre;
+        pre = cur;
+        cur = pos;
+    }
+    head = pre;
+    return head;
+}
 
 list_t lMerge(list_t a, list_t b);
