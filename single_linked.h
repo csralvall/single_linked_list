@@ -27,6 +27,6 @@ int lDeletePos(list_t head, int pos);
 
 int lSearch(list_t head, int key);
 
-void lReverse(list_t head);
+list_t lReverse(list_t head);
 
 list_t lMerge(list_t a, list_t b);
