@@ -25,6 +25,8 @@ list_t lDeleteT(list_t head);
 
 int lDeletePos(list_t head, int pos);
 
+int lSize(list_t head);
+
 int lSearch(list_t head, int key);
 
 list_t lReverse(list_t head);
