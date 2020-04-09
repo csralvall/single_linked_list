@@ -33,3 +33,5 @@ list_t lMerge(list_t a, list_t b);
 
 list_t lCopy(list_t head);
 
+void lDestroy(list_t head);
+
