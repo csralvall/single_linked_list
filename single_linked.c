@@ -242,6 +242,16 @@ list_t lCopy(list_t head) {
     return newList;
 }
 
+list_t lArrToList(int* arr, int size) {
+    list_t newList = lCreate(arr[0]);
+    
+    for(int i = 1; i < size; i++) {
+        lInsertT(newList,arr[i]);
+    }
+
+    return newList;
+}
+
 void lDestroy(list_t head) {
     while(head != NULL) {
         head = lDeleteH(head);
