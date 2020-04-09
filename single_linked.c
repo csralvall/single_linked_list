@@ -169,6 +169,18 @@ int lDeletePos(list_t head, int pos) {
     return 0;
 }
 
+int lSize(list_t head) {
+    list_t temp = head;
+    int size = 0;
+    
+    while(temp != NULL) {
+        size++;
+        temp = temp->link;
+    }
+
+    return size;
+}
+
 int lSearch(list_t head, int key) {
     int pos = 0;
     list_t temp = head;
