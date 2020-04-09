@@ -199,4 +199,34 @@ list_t lReverse(list_t head) {
     return head;
 }
 
-list_t lMerge(list_t a, list_t b);
+list_t lMerge(list_t a, list_t b) {
+    list_t ret = a;
+    if(a == NULL) {
+        ret = b;
+    } else if(b == NULL) {
+        ret = a;
+    } else if(a != b) {
+        list_t temp = a;
+        while(temp->link != NULL) {
+            temp = temp->link;
+        }
+        temp->link = b;
+        ret = a;
+    } else {
+        fprintf(stderr,"lMerge::ERROR - you can't merge the same list\n");
+    }
+
+    return ret;
+}
+
+list_t lCopy(list_t head) {
+    list_t newList = lCreate(head->data);
+    list_t temp = head->link;
+    while(temp != NULL) {
+        lInsertT(newList, temp->data);
+        temp = temp->link;
+    }
+    
+    return newList;
+}
+
