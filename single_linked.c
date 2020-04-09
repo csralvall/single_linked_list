@@ -230,3 +230,10 @@ list_t lCopy(list_t head) {
     return newList;
 }
 
+void lDestroy(list_t head) {
+    while(head != NULL) {
+        head = lDeleteH(head);
+    }
+}
+
+
