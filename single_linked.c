@@ -61,6 +61,7 @@ int lInsertPos(list_t head, int item, int pos) {
         return 1;
     } else if(pos < 0) {
         fprintf(stderr,"lInsertPos::ERROR - pos must be greater or equal to zero.\n");
+        return 1;
     } else {
         list_t temp = head;
         list_t ptemp = head;
