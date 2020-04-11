@@ -7,6 +7,7 @@
   * of the operations allowed over the lists.
   *
   * @author Cesar Alvarez Vallero
+  * @date April 2020
   *
   * @bug No known bugs.
   */
