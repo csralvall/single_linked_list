@@ -5,6 +5,7 @@
  * Functions to manipulate a single linked list with ease.
  *
  * @author csralvall
+ * @date April 2020
  *
  * @bug No known bugs
  */
