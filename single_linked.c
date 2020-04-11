@@ -1,3 +1,13 @@
+/**
+ * @file single_linked.c
+ * @brief Implementation of functions to use over a single likend list.
+ *
+ * Functions to manipulate a single linked list with ease.
+ *
+ * @author csralvall
+ *
+ * @bug No known bugs
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include "single_linked.h"
@@ -6,7 +16,7 @@ list_t lCreate(int item) {
     list_t new = calloc(1, sizeof(node_t));
     if(new == NULL) {
         fprintf(stderr,"lCreate::ERROR - allocation fail.\n");
-        exit(1);
+        return NULL;
     }
     new->data = item;
     new->link = NULL;
@@ -149,6 +159,7 @@ int lDeletePos(list_t head, int pos) {
         return 1;
     } else if(pos < 0) {
         fprintf(stderr,"lDeletePos::ERROR - pos must be greater or equal to zero.\n");
+        return 1;
     } else {
         list_t temp = head;
         list_t ptemp = head;
@@ -258,5 +269,4 @@ void lDestroy(list_t head) {
         head = lDeleteH(head);
     }
 }
-
 
