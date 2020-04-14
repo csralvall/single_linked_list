@@ -1,102 +1,142 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include "../inc/single_linked.h"
 
-void testInsertDelete(void) {
-    list_t list = lCreate(20);
-    lDisplay(list);
-    printf("\n");
+void test_create(void) {
+    list_t list = create(0);
+    destroy(list);
+}
+
+void test_insert(void) {
+    list_t list = create(20);
 
     for(int i = 19; i >= 0; i-=2) {
-        list = lInsertH(list,i);
-        lDisplay(list);
-        printf("\n");
+        list = insertH(list,i);
     }
 
     for(int i = 1; i < 19; i+=2) {
-        lInsertPre(list,i+1,i);
-        lDisplay(list);
-        printf("\n");
+        insertPre(list,i+1,i);
     }
 
     for(int i = 21; i < 30; i+=2) {
-        if(!lInsertT(list,i)) {
-            lDisplay(list);
-        }
-        printf("\n");
+        insertT(list,i);
     }
 
     for(int i = 21; i < 30; i+=2) {
-        lInsertPos(list,i+1,i);
-        lDisplay(list);
-        printf("\n");
+        insertPos(list,i+1,i);
     }
 
-    for(int i = 29; i > 20; i--) {
-        lDeletePos(list,i);
-        lDisplay(list);
-        printf("\n");
-    }
+    display(list);
 
-    for(int i = 0; i < 10; i++) {
-        list = lDeleteH(list);
-        lDisplay(list);
-        printf("\n");
-    }
-
-    int ret = lSearch(list,15);
-
-    if(ret != -1) {
-        printf("It is in pos %i.\n", ret);
-    } else {
-        printf("Not finded.\n");
-    }
-
-    ret = lSearch(list,9);
-    if(ret != -1) {
-        printf("It is in pos %i.\n", ret);
-    } else {
-        printf("Not finded.\n");
-    }
-
-
-    for(int i = 10; i < 21; i++) {
-        list = lDeleteT(list);
-        lDisplay(list);
-        printf("\n");
-    }
-
-
-    if(list == NULL) {
-        printf("All is OK.\n");
-    }
+    destroy(list);
 }
 
-void testCopy(void) {
-    list_t list = lCreate(0);
+void test_delete(void) {
+    list_t list = create(0);
+
+    for(int i = 1; i < 10; i++) {
+        list = insertH(list,i);
+    }
+
+    display(list);
+
+    for(int i = 1; i < 3; i++) {
+        deletePos(list,i);
+    }
+
+    display(list);
+
+    for(int i = 0; i < 3; i++) {
+        deleteT(list);
+    }
+
+    display(list);
+
+    for(int i = 0; i < 2; i++) {
+        list = deleteH(list);
+    }
+
+    destroy(list);
+}
+
+void test_size(void) {
+    list_t list = create(0);
+
+    for(int i = 1; i < 1000; i++) {
+        list = insertH(list,i);
+    }
+
+    assert(1000 == size(list));
+
+    destroy(list);
+}
+
+void test_search(void) {
+    list_t list = create(0);
+
+    for(int i = 1; i < 10; i++) {
+        insertT(list,i);
+    }
+
+    assert(-1 == search(list,11));
+
+    assert(9 == search(list,9));
+
+    destroy(list);
+}
+
+void test_reverse(void) {
+    list_t list = create(0);
+
+    for(int i = 1; i < 10; i++) {
+        list = insertH(list,i);
+    }
+
+    list = reverse(list);
+
+    display(list);
+
+    destroy(list);
+}
+
+void test_merge(void) {
+    list_t list = create(0);
+    list_t tsil = NULL;
+
+    for(int i = 1; i < 10; i++) {
+        list = insertH(list,i);
+    }
+
+    tsil = copy(list);
+    tsil = reverse(tsil);
+
+    list = merge(list,tsil);
+
+    destroy(list);
+}
+
+
+void test_copy(void) {
+    list_t list = create(0);
+    list_t tsil = create(10);
     
     for(int i = 1; i < 10; i++) {
-        lInsertT(list,i);
-        lDisplay(list);
-        printf("\n");
+        insertT(list,i);
     }
 
-    list_t tsil = lCopy(list);
-    lDisplay(tsil);
-    tsil = lReverse(tsil);
-    lDisplay(tsil);
-    printf("\n");
+    for(int i = 11; i < 20; i++) {
+        insertT(tsil,i);
+    }
 
-    list = lMerge(list,tsil);
-    lDisplay(list);
-    printf("\n");
+    display(list);
+    display(tsil);
 
-    printf("size of merged list: %i.\n", lSize(list));
-
-    lDestroy(list);
+    destroy(list);
+    destroy(tsil);
 }
 
-void testConversion(void) {
+void test_conversion(void) {
     int* arr = calloc(10, sizeof(int));
     list_t list = NULL;
     
@@ -108,22 +148,34 @@ void testConversion(void) {
         arr[i] = i;
     }
 
-    list = lArrToList(arr, 10);
-    lDisplay(list);
-    printf("\n");
+    list = arr2list(arr, 10);
 
-    lDestroy(list);
+    display(list);
+
+    destroy(list);
 
     free(arr);
 }
 
 int main(void) {
 
-    //testInsertDelete();
+    test_create();
 
-    //testCopy();
+    test_insert();
 
-    testConversion();
+    test_delete();
+
+    test_size();
+
+    test_merge();
+
+    test_reverse();
+
+    test_search();
+
+    test_copy();
+
+    test_conversion();
 
     return 0;
 }
