@@ -46,7 +46,7 @@ typedef node_t* list_t;
  * @warning if alloc fails, an error message is displayed,
  and the function returns
  */
-list_t lCreate(int item);
+list_t create(int item);
 
 /**
  * @brief Prints the content of a list.
@@ -58,7 +58,7 @@ list_t lCreate(int item);
  * @return 0 on succeed, 1 on failure
  * @note if head is NULL, prints warning and returns
  */
-int lDisplay(list_t head);
+int display(list_t head);
 
 /**
  * @brief Insert an element to the tail of the list.
@@ -72,7 +72,7 @@ int lDisplay(list_t head);
  * @return 0 on succeed, 1 on failure
  * @note if head is NULL, prints warning and returns
  */
-int lInsertT(list_t head, int item);
+int insertT(list_t head, int item);
 
 /**
  * @brief Inserts an element at the head of the list.
@@ -84,7 +84,7 @@ int lInsertT(list_t head, int item);
  * @param item value of the new node to insert
  * @return pointer to the new head of list
  */
-list_t lInsertH(list_t head, int item);
+list_t insertH(list_t head, int item);
 
 /**
  * @brief Inserts an element after a position given.
@@ -99,7 +99,7 @@ list_t lInsertH(list_t head, int item);
  * @warning if head is NULL, pos is negative or list is too short,
  * prints error and returns
  */
-int lInsertPos(list_t head, int item, int pos);
+int insertPos(list_t head, int item, int pos);
 
 /**
  * @brief Inserts element befor a position given.
@@ -114,7 +114,7 @@ int lInsertPos(list_t head, int item, int pos);
  * @warning if head is NULL, pre is less than one or list is too short,
  * prints error and returns
  */
-int lInsertPre(list_t head, int item, int pre);
+int insertPre(list_t head, int item, int pre);
 
 /**
  * @brief Deletes the head of the list.
@@ -125,7 +125,7 @@ int lInsertPre(list_t head, int item, int pre);
  * @return pointer to the new list
  * @note if head is NULL, prints a warning message and returns
  */
-list_t lDeleteH(list_t head);
+list_t deleteH(list_t head);
 
 /**
  * @brief Deletes the tail of the list.
@@ -137,7 +137,7 @@ list_t lDeleteH(list_t head);
  * @return pointer to the list without the last item
  * @note if head is NULL, prints warning message and returns
  */
-list_t lDeleteT(list_t head);
+list_t deleteT(list_t head);
 
 /**
  * @brief Deletes the element after a given position.
@@ -149,10 +149,10 @@ list_t lDeleteT(list_t head);
  * @param head pointer to the beginning of the list
  * @param pos position after which removes the element
  * @return 0 on succeed, 1 on failure
- * @warning if head is null, pos is negative or greater than list size
- * the function prints error and returns
+ * @warning if head is null, pos is negative, equal to zero
+ * or greater than list size the function prints error and returns
  */
-int lDeletePos(list_t head, int pos);
+int deletePos(list_t head, int pos);
 
 /**
  * @brief Computes the size of the list.
@@ -163,7 +163,7 @@ int lDeletePos(list_t head, int pos);
  * @return the number of elements in the list
  * @note a null pointer means an empty list
  */
-int lSize(list_t head);
+int size(list_t head);
 
 /**
  * @brief Searchs an item in the list.
@@ -176,7 +176,7 @@ int lSize(list_t head);
  * @return if found, the position of the element, -1 on the other case
  * @note if head is NULL, prints warning message and returns
  */
-int lSearch(list_t head, int key);
+int search(list_t head, int key);
 
 /**
  * @brief Reverse the order of the list.
@@ -186,7 +186,7 @@ int lSearch(list_t head, int key);
  * @param head pointer to the beginning of the list
  * @returns a pointer to the tail of the old list
  */
-list_t lReverse(list_t head);
+list_t reverse(list_t head);
 
 /**
  * @brief Takes two list, join them and turns into only one.
@@ -201,7 +201,7 @@ list_t lReverse(list_t head);
  * @warning you can't merge the same list, in case of that
  prints error and returns
  */
-list_t lMerge(list_t a, list_t b);
+list_t merge(list_t a, list_t b);
 
 /**
  * @brief Copies all the list on another new list
@@ -212,7 +212,7 @@ list_t lMerge(list_t a, list_t b);
  * @param head pointer to the beginning of the list
  * @return a pointer to the new list
  */
-list_t lCopy(list_t head);
+list_t copy(list_t head);
 
 /**
  * @brief Transforms an array into a single linked list
@@ -224,7 +224,7 @@ list_t lCopy(list_t head);
  * @param size size of the array
  * @return a pointer to the new list on succeed or NULL on failure
  */
-list_t lArrToList(int* arr, int size);
+list_t arr2list(int* arr, int size);
 
 /**
  * @brief Destroys all the list.
@@ -234,5 +234,5 @@ list_t lArrToList(int* arr, int size);
  * @param head pointer to the beginning of the list
  * @return Void
  */
-void lDestroy(list_t head);
+void destroy(list_t head);
 
