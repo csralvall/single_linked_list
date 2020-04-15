@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 /**
- * @brief Structure of each node that begins to the list.
+ * @brief Structure of each node that belongs to the list.
  *
  * Struct that holds an integer and a pointer to the next
  * node of the list.
