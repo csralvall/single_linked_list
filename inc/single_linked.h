@@ -12,6 +12,9 @@
   * @bug No known bugs.
   */
 
+#ifndef LIST_H_
+#define LIST_H_
+
 #include <stdlib.h>
 
 /**
@@ -20,10 +23,10 @@
  * Struct that holds an integer and a pointer to the next
  * node of the list.
  */
-typedef struct node{
+typedef struct node {
     int data;
     struct node* link;
-}node_t;
+} node_t;
 
 /**
  * @brief Pointer to a node in the list.
@@ -235,4 +238,6 @@ list_t arr2list(int* arr, int size);
  * @return Void
  */
 void destroy(list_t head);
+
+#endif // LIST_H_
 
