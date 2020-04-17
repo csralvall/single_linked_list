@@ -13,8 +13,20 @@
 #include <stdio.h>
 #include "../inc/single_linked.h"
 
-list_t create(int item) {
-    list_t new = calloc(1, sizeof(node_t));
+struct node_t {
+    int data;
+    struct node_t* link;
+};
+
+typedef struct node_t* node;
+
+struct list_t {
+    int size;
+    node head;
+};
+
+static node create(int item) {
+    node new = calloc(1, sizeof(struct node_t));
     if(new == NULL) {
         fprintf(stderr,"create::ERROR - allocation fail.\n");
         return NULL;
@@ -25,12 +37,26 @@ list_t create(int item) {
     return new;
 }
 
-int display(list_t head) {
-    if(head == NULL) {
-        fprintf(stderr,"lVisit::WARNING - null pointer as argument.\n");
+List * init(void) {
+    List* new = calloc(1, sizeof(struct list_t));
+
+    if(new == NULL) {
+        fprintf(stderr,"init::ERROR - allocation fail.\n");
+        return NULL;
+    }
+
+    new->size = 0;
+    new->head = NULL;
+
+    return new;
+}
+
+int display(List *list) {
+    if(empty(list)) {
+        fprintf(stderr,"display::ERROR - empty list as argument.\n");
         return 1;
     } else {
-        list_t temp = head;
+        node temp = list->head;
         while(temp->link != NULL) {
             printf("[%i]->", temp->data);
             temp = temp->link;
@@ -42,129 +68,136 @@ int display(list_t head) {
     return 0;
 }
 
-int insertT(list_t head, int item) {
-    if(head == NULL) {
-        fprintf(stderr,"insertT::WARNING - null pointer as argument.\n");
+int insertT(List *list, int item) {
+    if(empty(list)) {
+        fprintf(stderr,"insertT::ERROR - empty list as argument.\n");
         return 1;
     } else {
-        list_t temp = head;
+        node temp = list->head;
         while(temp->link != NULL) {
             temp = temp->link;
         }
-        list_t new = create(item);
+        node new = create(item);
         temp->link = new;
+        list->size++;
     }
 
     return 0;
 }
 
-list_t insertH(list_t head, int item) {
-    list_t temp = head;
-    list_t new = create(item);
-    new->link = temp;
-    head = new;
-
-    return head;
-}
-
-int insertPos(list_t head, int item, int pos) {
-    if(head == NULL) {
-        fprintf(stderr,"insertPos::ERROR - null pointer, list must be initialized.\n");
-        return 1;
-    } else if(pos < 0) {
-        fprintf(stderr,"insertPos::ERROR - pos must be greater or equal to zero.\n");
+int insertH(List *list, int item) {
+    if(empty(list)) {
+        fprintf(stderr,"insertH::ERROR - empty list as argument.\n");
         return 1;
     } else {
-        list_t temp = head;
-        list_t ptemp = head;
+        node temp = list->head;
+        node new = create(item);
+        new->link = temp;
+        list->head = new;
+        list->size++;
+    }
+
+    return 0;
+}
+
+int insertPos(List *list, int item, int pos) {
+    if(empty(list)) {
+        fprintf(stderr,"insertPos::ERROR - empty list, list must be initialized.\n");
+        return 1;
+    } else if(pos < 0 || pos >= size(list)) {
+        fprintf(stderr,"insertPos::ERROR - pos is out of the bounds of the list.\n");
+        return 1;
+    } else {
+        node temp = list->head;
+        node ptemp = list->head;
         while(ptemp != NULL && pos) {
             temp = ptemp;
             ptemp = ptemp->link;
             pos--;
         }
         if(pos == 0) {
-            list_t new = create(item);
+            node new = create(item);
             new->link = temp->link;
             temp->link = new;
-        } else {
-            fprintf(stderr,"insertPos::ERROR - list is to short, unreachable position.\n");
-            return 1;
+            list->size++;
         }
     }
 
     return 0;
 }
 
-int insertPre(list_t head, int item, int pre) {
-    if(head == NULL) {
-        fprintf(stderr,"insertPre::ERROR - null pointer, unreachable position.\n");
+int insertPre(List *list, int item, int pre) {
+    if(empty(list)) {
+        fprintf(stderr,"insertPre::ERROR - empty list, unreachable position.\n");
         return 1;
-    } else if(pre < 1) {
-        fprintf(stderr,"insertPre::ERROR - pre must be greater than zero.\n");
+    } else if(pre < 1 || pre > size(list)) {
+        fprintf(stderr,"insertPre::ERROR - pre is out of the bounds of the list.\n");
         return 1;
     } else {
-        list_t temp = head;
+        node temp = list->head;
         while(temp->link != NULL && pre != 1) {
             temp = temp->link;
             pre--;
         }
         if(pre == 1) {
-            list_t new = create(item);
+            node new = create(item);
             new->link = temp->link;
             temp->link = new;
-        } else {
-            fprintf(stderr,"insertPre::ERROR - list is to short, unreachable position.\n");
-            return 1;
+            list->size++;
         }
     }
 
     return 0;
 }
 
-list_t deleteH(list_t head) {
-    if(head != NULL) {
-        list_t temp = head;
-        head = head->link;
-        free(temp);
-    } else {
+int deleteH(List *list) {
+    if(empty(list)) {
         fprintf(stderr,"deleteH::WARNING - the list is empty.\n");
+        return 1;
+    } else {
+        node temp = list->head;
+        list->head = temp->link;
+        free(temp);
+        list->size--;
     }
 
-    return head;
+    return 0;
 }
 
-list_t deleteT(list_t head) {
-    if(head == NULL) {
+int deleteT(List *list) {
+    if(empty(list)) {
         fprintf(stderr,"deleteT::WARNING - the list is empty.\n");
+        return 1;
     } else {
-        list_t temp = head;
-        list_t ptemp = head;
+        node temp = list->head;
+        node ptemp = list->head;
         while(ptemp->link != NULL) {
             temp = ptemp;
             ptemp = ptemp->link;
         }
-        if(ptemp != head) {
+        if(ptemp != list->head) {
             free(ptemp);
             temp->link = NULL;
         } else {
             free(ptemp);
-            head = NULL;
+            list->head = NULL;
         }
+        list->size--;
     }
 
-    return head;
+    return 0;
 }
 
-int deletePos(list_t head, int pos) {
-    if(head == NULL) {
-        fprintf(stderr,"deletePos::ERROR - null pointer, list must be initialized.\n");
+int deletePos(List *list, int pos) {
+    if(empty(list)) {
+        fprintf(stderr,"deletePos::ERROR - list is empty, nothing to delete.\n");
         return 1;
-    } else if(pos <= 0) {
-        fprintf(stderr,"deletePos::ERROR - pos must be greater or equal to zero.\n");
+    } else if(pos <= 0 || pos > (size(list)-1)) {
+        fprintf(stderr,"deletePos::ERROR - pos is out of the bounds of the list.\n");
         return 1;
     } else {
-        list_t temp = head;
-        list_t ptemp = head;
+        node temp = list->head;
+        node ptemp = list->head;
         while(ptemp->link != NULL && pos) {
             temp = ptemp;
             ptemp = ptemp->link;
@@ -174,32 +207,30 @@ int deletePos(list_t head, int pos) {
             temp->link = ptemp->link;
             free(ptemp);
             ptemp = NULL;
-        } else {
-            fprintf(stderr,"deletePos::ERROR - list is to short, unreachable position.\n");
-            return 1;
+            list->size--;
         }
     }
 
     return 0;
 }
 
-int size(list_t head) {
-    list_t temp = head;
-    int size = 0;
-    
-    while(temp != NULL) {
-        size++;
-        temp = temp->link;
-    }
-
-    return size;
+int size(List *list) {
+    return (list->size);
 }
 
-int search(list_t head, int key) {
+int empty(List *list) {
+    if(list->head == NULL) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int search(List *list, int key) {
     int pos = 0;
-    list_t temp = head;
-    if(head == NULL) {
-        fprintf(stderr,"search::WARNING - list is empty");
+    node temp = list->head;
+    if(empty(list)) {
+        fprintf(stderr,"search::ERROR - list is empty");
     } else {
         while(temp != NULL && temp->data != key) {
             temp = temp->link;
@@ -213,41 +244,39 @@ int search(list_t head, int key) {
 }
         
 
-list_t reverse(list_t head) {
-    list_t pos, cur = head, pre = NULL;
+void reverse(List *list) {
+    node pos, cur = list->head, pre = NULL;
     while(cur != NULL) {
         pos = cur->link;
         cur->link = pre;
         pre = cur;
         cur = pos;
     }
-    head = pre;
-    return head;
+    list->head = pre;
 }
 
-list_t merge(list_t a, list_t b) {
-    list_t ret = a;
-    if(a == NULL) {
-        ret = b;
-    } else if(b == NULL) {
-        ret = a;
+int merge(List *a, List *b) {
+    if(empty(a) || empty(b)) {
+        fprintf(stderr,"merge::ERROR - can't merge empty list.\n");
+        return 1;
     } else if(a != b) {
-        list_t temp = a;
+        node temp = a->head;
         while(temp->link != NULL) {
             temp = temp->link;
         }
-        temp->link = b;
-        ret = a;
+        temp->link = b->head;
+        b = NULL;
     } else {
-        fprintf(stderr,"merge::ERROR - you can't merge the same list\n");
+        fprintf(stderr,"merge::ERROR - can't merge list with itself.\n");
+        return 1;
     }
 
-    return ret;
+    return 0;
 }
 
-list_t copy(list_t head) {
-    list_t newList = create(head->data);
-    list_t temp = head->link;
+List * copy(List *list) {
+    List *newList = init();
+    node temp = list->head;
     while(temp != NULL) {
         insertT(newList, temp->data);
         temp = temp->link;
@@ -256,8 +285,8 @@ list_t copy(list_t head) {
     return newList;
 }
 
-list_t arr2list(int* arr, int size) {
-    list_t newList = create(arr[0]);
+List * arr2list(int* arr, int size) {
+    List *newList = init();
     
     for(int i = 1; i < size; i++) {
         insertT(newList,arr[i]);
@@ -266,9 +295,12 @@ list_t arr2list(int* arr, int size) {
     return newList;
 }
 
-void destroy(list_t head) {
-    while(head != NULL) {
-        head = deleteH(head);
+void destroy(List *list) {
+    while(!empty(list)) {
+        deleteH(list);
+        list->size--;
     }
+    free(list);
+    list = NULL;
 }
 
