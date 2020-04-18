@@ -4,19 +4,19 @@
 #include "../inc/single_linked.h"
 
 void test_create(void) {
-    list_t list = create(0);
+    List *list = init();
     destroy(list);
 }
 
 void test_insert(void) {
-    list_t list = create(20);
+    List *list = init();
 
-    for(int i = 19; i >= 0; i-=2) {
-        list = insertH(list,i);
+    for(int i = 20; i >= 0; i-=2) {
+        insertH(list,i);
     }
 
     for(int i = 1; i < 19; i+=2) {
-        insertPre(list,i+1,i);
+        insertPre(list,i,i);
     }
 
     for(int i = 21; i < 30; i+=2) {
@@ -33,10 +33,10 @@ void test_insert(void) {
 }
 
 void test_delete(void) {
-    list_t list = create(0);
+    List *list = init();
 
     for(int i = 1; i < 10; i++) {
-        list = insertH(list,i);
+        insertT(list,i);
     }
 
     display(list);
@@ -54,17 +54,17 @@ void test_delete(void) {
     display(list);
 
     for(int i = 0; i < 2; i++) {
-        list = deleteH(list);
+        deleteH(list);
     }
 
     destroy(list);
 }
 
 void test_size(void) {
-    list_t list = create(0);
+    List *list = init();
 
-    for(int i = 1; i < 1000; i++) {
-        list = insertH(list,i);
+    for(int i = 0; i < 1000; i++) {
+        insertT(list,i);
     }
 
     assert(1000 == size(list));
@@ -73,27 +73,27 @@ void test_size(void) {
 }
 
 void test_search(void) {
-    list_t list = create(0);
+    List *list = init();
 
-    for(int i = 1; i < 10; i++) {
+    for(int i = 0; i < 10; i++) {
         insertT(list,i);
     }
 
     assert(-1 == search(list,11));
 
-    assert(9 == search(list,9));
+    assert(8 == search(list,9));
 
     destroy(list);
 }
 
 void test_reverse(void) {
-    list_t list = create(0);
+    List *list = init();
 
-    for(int i = 1; i < 10; i++) {
-        list = insertH(list,i);
+    for(int i = 0; i < 10; i++) {
+        insertH(list,i);
     }
 
-    list = reverse(list);
+    reverse(list);
 
     display(list);
 
@@ -101,27 +101,10 @@ void test_reverse(void) {
 }
 
 void test_merge(void) {
-    list_t list = create(0);
-    list_t tsil = NULL;
+    List *list = init();
+    List *tsil = init();
 
-    for(int i = 1; i < 10; i++) {
-        list = insertH(list,i);
-    }
-
-    tsil = copy(list);
-    tsil = reverse(tsil);
-
-    list = merge(list,tsil);
-
-    destroy(list);
-}
-
-
-void test_copy(void) {
-    list_t list = create(0);
-    list_t tsil = create(10);
-    
-    for(int i = 1; i < 10; i++) {
+    for(int i = 0; i < 10; i++) {
         insertT(list,i);
     }
 
@@ -129,8 +112,48 @@ void test_copy(void) {
         insertT(tsil,i);
     }
 
+    merge(list,tsil);
+
     display(list);
-    display(tsil);
+
+    destroy(list);
+}
+
+void test_query(void) {
+    List *list = init();
+    int ret = -1;
+
+    for(int i = 0; i < 10; i++) {
+        insertT(list,i);
+    }
+
+    for(int i = 0; i < 10; i++) {
+        query(list,i,&ret);
+        assert(ret == i);
+    }
+
+    destroy(list);
+}
+
+void test_copy(void) {
+    List *list = init();
+    List *tsil = NULL;
+    int val1 = -1;
+    int val2 = -1;
+    
+    for(int i = 1; i < 10; i++) {
+        insertT(list,i);
+    }
+
+    tsil = copy(list);
+
+    while(empty(list)) {
+        query(list,0,&val1);
+        query(tsil,0,&val2);
+        assert(val1 = val2);
+        deleteH(list);
+        deleteH(tsil);
+    }
 
     destroy(list);
     destroy(tsil);
@@ -138,7 +161,7 @@ void test_copy(void) {
 
 void test_conversion(void) {
     int* arr = calloc(10, sizeof(int));
-    list_t list = NULL;
+    List *list = NULL;
     
     if(arr == NULL) {
         fprintf(stderr,"testConversion::ERROR - calloc failed.\n");
@@ -167,11 +190,13 @@ int main(void) {
 
     test_size();
 
-    test_merge();
+    test_search();
 
     test_reverse();
 
-    test_search();
+    test_merge();
+
+    test_query();
 
     test_copy();
 
