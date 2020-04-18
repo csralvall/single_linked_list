@@ -41,12 +41,12 @@ List * init(void);
 /**
  * @brief Prints the content of a list.
  *
- * Runs over the list from beginning to end and
- * prints its content to stdout.
+ * Runs over the list from beginning to end and prints its content
+ * to stdout.
  *
  * @param list pointer to the list.
  * @return 0 on success, 1 on failure.
- * @note if list is empty, prints error and returns.
+ * @warning if list unitialized or empty, prints error and returns.
  */
 int display(List *list);
 
@@ -60,7 +60,7 @@ int display(List *list);
  * @param list pointer to the list.
  * @param item value of the new node to insert.
  * @return 0 on success, 1 on failure.
- * @note if list is empty, prints error and returns.
+ * @warning if list is unitialized, prints error and returns.
  */
 int insertT(List *list, int item);
 
@@ -73,7 +73,7 @@ int insertT(List *list, int item);
  * @param list pointer to the list.
  * @param item value of the new node to insert.
  * @return 0 on success, 1 on failure.
- * @note if list is empty, prints error and returns.
+ * @warning if list is unitialized, prints error and returns.
  */
 int insertH(List *list, int item);
 
@@ -87,7 +87,7 @@ int insertH(List *list, int item);
  * @param item value of the new node to insert.
  * @param pos position after which inserts the item.
  * @return 0 on success, 1 on failure.
- * @warning if list is empty, pos is negative or list size is less
+ * @warning if list is unitialized, pos is negative or list size is less
  * than pos, prints error and returns.
  */
 int insertPos(List *list, int item, int pos);
@@ -102,8 +102,8 @@ int insertPos(List *list, int item, int pos);
  * @param item value of the new node to insert.
  * @param pre position before which inserts the item.
  * @return 0 on success, 1 on failure.
- * @warning if list is empty, pre is negative or list size is less
- * or equal to pre, prints error and returns.
+ * @warning if list is unitialized or empty, pre is negative
+ * or list size is less or equal to pre, prints error and returns.
  */
 int insertPre(List *list, int item, int pre);
 
@@ -114,6 +114,7 @@ int insertPre(List *list, int item, int pre);
  *
  * @param list pointer to the list.
  * @return the list without his first element.
+ * @warning if list is unitialized prints error and returns.
  * @note if list is empty, prints a warning message and returns.
  */
 int deleteH(List *list);
@@ -126,6 +127,7 @@ int deleteH(List *list);
  *
  * @param list pointer to the list.
  * @return the list without the last item.
+ * @warning if the list is unitialized prints error and returns.
  * @note if list is empty, prints warning message and returns.
  */
 int deleteT(List *list);
@@ -140,8 +142,9 @@ int deleteT(List *list);
  * @param list pointer to the list.
  * @param pos position after which remove the element.
  * @return 0 on success, 1 on failure.
- * @warning if list is empty, pos is negative, equal to zero
- * or greater than list size the function prints error and returns.
+ * @warning if list is unitialized or empty, pos is negative,
+ * equal to zero or greater than list size the function
+ * prints error and returns.
  */
 int deletePos(List *list, int pos);
 
@@ -151,7 +154,9 @@ int deletePos(List *list, int pos);
  * Returns the number of items inside the list.
  *
  * @param list pointer to the list.
- * @return the number of elements inside the list.
+ * @return the number of elements inside the list on succes
+ * or -1 on failure.
+ * @warning if the list is unitialized prints error and returns.
  */
 int size(List *list);
 
@@ -161,7 +166,8 @@ int size(List *list);
  * Allows the user to check if the list is empty.
  *
  * @param list pointer to the list.
- * @return 1 if the list is empty, 0 if not.
+ * @return 1 if the list is empty or unitialized, 0 if not.
+ * @warning if the list is unitialized prints error and returns.
  */
 int empty(List *list);
 
@@ -174,9 +180,25 @@ int empty(List *list);
  * @param list pointer to the list.
  * @param key element to search for.
  * @return if found, the position of the element, -1 on the other case.
- * @note if list is empty, prints error message and returns.
+ * @warning if list is unitialized or empty, prints error message
+ * and returns.
  */
 int search(List *list, int key);
+
+/**
+ * @brief Retrieves the element in the position given.
+ *
+ * Returns the current element in the given position at
+ * that moment in the list.
+ *
+ * @param list pointer to the list.
+ * @param pos position of the element queried.
+ * @param ret address of the return value.
+ * @return 0 on succees, 1 on failure.
+ * @warning if the list is unitialized, pos is less than 0 or greater
+ * than the size of the list, prints error and returns.
+ */
+int query(List *list, int pos, int *ret);
 
 /**
  * @brief Reverse the order of the list.
@@ -185,6 +207,7 @@ int search(List *list, int key);
  *
  * @param list pointer to the list.
  * @return Void
+ * @warning if the list is unitialized prints error and returns.
  */
 void reverse(List *list);
 
@@ -197,8 +220,8 @@ void reverse(List *list);
  * @params a pointer to the first list.
  * @params b pointer to the second list.
  * @return 0 on success, 1 on failure.
- * @warning in case of null pointer or the same list on both parameters,
- * prints error and returns.
+ * @warning in case of unitialized list or the same list
+ * on both parameters, prints error and returns.
  */
 int merge(List *a, List *b);
 
@@ -210,6 +233,8 @@ int merge(List *a, List *b);
  *
  * @param list pointer to the list.
  * @return a pointer to the new list on success or NULL on failure.
+ * @warning if the list is unitialized prints error and returns.
+ * @note the user must check if the list is empty.
  */
 List * copy(List *list);
 
@@ -222,6 +247,7 @@ List * copy(List *list);
  * @param arr pointer to the beginning of the array.
  * @param size size of the array.
  * @return a pointer to the new list on success or NULL on failure.
+ * @note if the size provided is less than 0, prints warning and returns.
  */
 List * arr2list(int* arr, int size);
 
@@ -233,6 +259,7 @@ List * arr2list(int* arr, int size);
  *
  * @param list pointer to the list.
  * @return Void
+ * @warning if list is unitialized prints error and returns.
  */
 void destroy(List *head);
 
