@@ -52,7 +52,10 @@ List * init(void) {
 }
 
 int display(List *list) {
-    if(empty(list)) {
+    if(list == NULL) {
+        fprintf(stderr,"display::ERROR - unitialized list.\n");
+        return 1;
+    } else if(empty(list)) {
         fprintf(stderr,"display::ERROR - empty list as argument.\n");
         return 1;
     } else {
@@ -69,16 +72,20 @@ int display(List *list) {
 }
 
 int insertT(List *list, int item) {
-    if(empty(list)) {
-        fprintf(stderr,"insertT::ERROR - empty list as argument.\n");
+    if(list == NULL) {
+        fprintf(stderr,"insertT::ERROR - unitialized list.\n");
         return 1;
     } else {
-        node temp = list->head;
-        while(temp->link != NULL) {
-            temp = temp->link;
-        }
         node new = create(item);
-        temp->link = new;
+        if(empty(list)) {
+            list->head = new;
+        } else {
+            node temp = list->head;
+            while(temp->link != NULL) {
+                temp = temp->link;
+            }
+            temp->link = new;
+        }
         list->size++;
     }
 
@@ -86,8 +93,8 @@ int insertT(List *list, int item) {
 }
 
 int insertH(List *list, int item) {
-    if(empty(list)) {
-        fprintf(stderr,"insertH::ERROR - empty list as argument.\n");
+    if(list == NULL) {
+        fprintf(stderr,"insertH::ERROR - unitialized list.\n");
         return 1;
     } else {
         node temp = list->head;
@@ -101,8 +108,8 @@ int insertH(List *list, int item) {
 }
 
 int insertPos(List *list, int item, int pos) {
-    if(empty(list)) {
-        fprintf(stderr,"insertPos::ERROR - empty list, list must be initialized.\n");
+    if(list == NULL) {
+        fprintf(stderr,"insertPos::ERROR - unitialized list.\n");
         return 1;
     } else if(pos < 0 || pos >= size(list)) {
         fprintf(stderr,"insertPos::ERROR - pos is out of the bounds of the list.\n");
@@ -115,19 +122,20 @@ int insertPos(List *list, int item, int pos) {
             ptemp = ptemp->link;
             pos--;
         }
-        if(pos == 0) {
-            node new = create(item);
-            new->link = temp->link;
-            temp->link = new;
-            list->size++;
-        }
+        node new = create(item);
+        new->link = temp->link;
+        temp->link = new;
+        list->size++;
     }
 
     return 0;
 }
 
 int insertPre(List *list, int item, int pre) {
-    if(empty(list)) {
+    if(list == NULL) {
+        fprintf(stderr,"insertPre::ERROR - unitialized list.\n");
+        return 1;
+    } else if(empty(list)) {
         fprintf(stderr,"insertPre::ERROR - empty list, unreachable position.\n");
         return 1;
     } else if(pre < 1 || pre > size(list)) {
@@ -151,7 +159,10 @@ int insertPre(List *list, int item, int pre) {
 }
 
 int deleteH(List *list) {
-    if(empty(list)) {
+    if(list == NULL) {
+        fprintf(stderr,"deleteH::ERROR - unitialized list.\n");
+        return 1;
+    } else if(empty(list)) {
         fprintf(stderr,"deleteH::WARNING - the list is empty.\n");
         return 1;
     } else {
@@ -165,7 +176,10 @@ int deleteH(List *list) {
 }
 
 int deleteT(List *list) {
-    if(empty(list)) {
+    if(list == NULL) {
+        fprintf(stderr,"deleteT::ERROR - unitialized list.\n");
+        return 1;
+    } else if(empty(list)) {
         fprintf(stderr,"deleteT::WARNING - the list is empty.\n");
         return 1;
     } else {
@@ -189,7 +203,10 @@ int deleteT(List *list) {
 }
 
 int deletePos(List *list, int pos) {
-    if(empty(list)) {
+    if(list == NULL) {
+        fprintf(stderr,"deletePos::ERROR - unitialized list.\n");
+        return 1;
+    } else if(empty(list)) {
         fprintf(stderr,"deletePos::ERROR - list is empty, nothing to delete.\n");
         return 1;
     } else if(pos <= 0 || pos > (size(list)-1)) {
@@ -203,60 +220,94 @@ int deletePos(List *list, int pos) {
             ptemp = ptemp->link;
             pos--;
         }
-        if(pos == 0) {
-            temp->link = ptemp->link;
-            free(ptemp);
-            ptemp = NULL;
-            list->size--;
-        }
+        temp->link = ptemp->link;
+        free(ptemp);
+        ptemp = NULL;
+        list->size--;
     }
 
     return 0;
 }
 
 int size(List *list) {
+    if(list == NULL) {
+        fprintf(stderr,"size::ERROR - unitialized list.\n");
+        return -1;
+    }
     return (list->size);
 }
 
 int empty(List *list) {
-    if(list->head == NULL) {
-        return 1;
-    } else {
-        return 0;
-    }
+    int ret = 0;
+    if(list == NULL) {
+        fprintf(stderr,"empty::ERROR - unitialized list.\n");
+        ret = 1;
+    } else if(list->head == NULL) {
+        ret = 1;
+    } 
+
+    return ret;
 }
 
 int search(List *list, int key) {
-    int pos = 0;
-    node temp = list->head;
-    if(empty(list)) {
-        fprintf(stderr,"search::ERROR - list is empty");
+    int pos = -1;
+    if(list == NULL) {
+        fprintf(stderr,"search::ERROR - unitialized list.\n");
+    } else if(empty(list)) {
+        fprintf(stderr,"search::ERROR - list is empty.\n");
     } else {
+        node temp = list->head;
         while(temp != NULL && temp->data != key) {
             temp = temp->link;
             pos++;
         }
+        if(temp == NULL) {
+            pos = -1;
+        }
     }
-    if(temp == NULL) {
-        pos = -1;
-    }
+
     return pos;
 }
-        
+
+int query(List *list, int pos, int *ret) {
+    if(list == NULL) {
+        fprintf(stderr,"query::ERROR - unitialized list.\n");
+        return 1;
+    } else if(pos < 0 || pos >= size(list)) {
+        fprintf(stderr,"query::ERROR - pos is out of the bounds of the list.\n");
+        return 1;
+    } else {
+        node temp = list->head;
+        while(temp->link != NULL && pos) {
+            temp = temp->link;
+            pos--;
+        }
+        *ret = temp->data;
+    }
+
+    return 0;
+}
 
 void reverse(List *list) {
-    node pos, cur = list->head, pre = NULL;
-    while(cur != NULL) {
-        pos = cur->link;
-        cur->link = pre;
-        pre = cur;
-        cur = pos;
+    if(list == NULL) {
+        fprintf(stderr,"reverse::ERROR - unitialized list.\n");
+    } else {
+        node pos, cur = list->head, pre = NULL;
+        while(cur != NULL) {
+            pos = cur->link;
+            cur->link = pre;
+            pre = cur;
+            cur = pos;
+        }
+        list->head = pre;
     }
-    list->head = pre;
 }
 
 int merge(List *a, List *b) {
-    if(empty(a) || empty(b)) {
+    if(a == NULL || b == NULL) {
+        fprintf(stderr,"merge::ERROR - unitialized list.\n");
+        return 1;
+    } else if(empty(a) || empty(b)) {
         fprintf(stderr,"merge::ERROR - can't merge empty list.\n");
         return 1;
     } else if(a != b) {
@@ -265,7 +316,8 @@ int merge(List *a, List *b) {
             temp = temp->link;
         }
         temp->link = b->head;
-        b = NULL;
+        b->head = NULL;
+        destroy(b);
     } else {
         fprintf(stderr,"merge::ERROR - can't merge list with itself.\n");
         return 1;
@@ -275,32 +327,47 @@ int merge(List *a, List *b) {
 }
 
 List * copy(List *list) {
-    List *newList = init();
-    node temp = list->head;
-    while(temp != NULL) {
-        insertT(newList, temp->data);
-        temp = temp->link;
+    List *newList = NULL;
+    if(list == NULL) {
+        fprintf(stderr,"copy::ERROR - unitialized list.\n");
+        return NULL;
+    } else {
+        newList = init();
+        node temp = list->head;
+        while(temp != NULL) {
+            insertT(newList, temp->data);
+            temp = temp->link;
+        }
     }
     
     return newList;
 }
 
 List * arr2list(int* arr, int size) {
-    List *newList = init();
-    
-    for(int i = 1; i < size; i++) {
-        insertT(newList,arr[i]);
+    List *newList = NULL;
+    if(size > 0) {
+        newList = init();
+        
+        for(int i = 0; i < size; i++) {
+            insertT(newList,arr[i]);
+        }
+    } else {
+        fprintf(stderr,"arr2list::WARNING - size must be greater than 0.\n");
     }
 
     return newList;
 }
 
 void destroy(List *list) {
-    while(!empty(list)) {
-        deleteH(list);
-        list->size--;
+    if(list == NULL) {
+        fprintf(stderr,"destroy::ERROR - unitialized list.\n");
+    } else {
+        while(!empty(list)) {
+            deleteH(list);
+            list->size--;
+        }
+        free(list);
+        list = NULL;
     }
-    free(list);
-    list = NULL;
 }
 
