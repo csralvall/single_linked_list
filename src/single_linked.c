@@ -11,21 +11,21 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
-#include "../inc/single_linked.h"
+#include "../inc/int_list.h"
 
 struct node_t {
-    int data;
+    TYPE data;
     struct node_t* link;
 };
 
 typedef struct node_t* node;
 
-struct list_t {
+struct TYPED(List) {
     int size;
     node head;
 };
 
-static node create(int item) {
+static node create(TYPE item) {
     node new = calloc(1, sizeof(struct node_t));
     if(new == NULL) {
         fprintf(stderr,"create::ERROR - allocation fail.\n");
@@ -37,8 +37,8 @@ static node create(int item) {
     return new;
 }
 
-List * init(void) {
-    List* new = calloc(1, sizeof(struct list_t));
+TYPED(List) * TYPED(init) (void) {
+    TYPED(List)* new = calloc(1, sizeof(struct TYPED(List)));
 
     if(new == NULL) {
         fprintf(stderr,"init::ERROR - allocation fail.\n");
@@ -51,11 +51,11 @@ List * init(void) {
     return new;
 }
 
-int display(List *list) {
+int TYPED(display) (TYPED(List) *list) {
     if(list == NULL) {
         fprintf(stderr,"display::ERROR - unitialized list.\n");
         return 1;
-    } else if(empty(list)) {
+    } else if(TYPED(empty) (list)) {
         fprintf(stderr,"display::ERROR - empty list as argument.\n");
         return 1;
     } else {
@@ -71,13 +71,13 @@ int display(List *list) {
     return 0;
 }
 
-int insertT(List *list, int item) {
+int TYPED(insertT) (TYPED(List) *list, TYPE item) {
     if(list == NULL) {
         fprintf(stderr,"insertT::ERROR - unitialized list.\n");
         return 1;
     } else {
         node new = create(item);
-        if(empty(list)) {
+        if(TYPED(empty) (list)) {
             list->head = new;
         } else {
             node temp = list->head;
@@ -92,7 +92,7 @@ int insertT(List *list, int item) {
     return 0;
 }
 
-int insertH(List *list, int item) {
+int TYPED(insertH) (TYPED(List) *list, TYPE item) {
     if(list == NULL) {
         fprintf(stderr,"insertH::ERROR - unitialized list.\n");
         return 1;
@@ -107,11 +107,11 @@ int insertH(List *list, int item) {
     return 0;
 }
 
-int insertPos(List *list, int item, int pos) {
+int TYPED(insertPos) (TYPED(List) *list, TYPE item, int pos) {
     if(list == NULL) {
         fprintf(stderr,"insertPos::ERROR - unitialized list.\n");
         return 1;
-    } else if(pos < 0 || pos >= size(list)) {
+    } else if(pos < 0 || pos >= TYPED(size) (list)) {
         fprintf(stderr,"insertPos::ERROR - pos is out of the bounds of the list.\n");
         return 1;
     } else {
@@ -131,14 +131,14 @@ int insertPos(List *list, int item, int pos) {
     return 0;
 }
 
-int insertPre(List *list, int item, int pre) {
+int TYPED(insertPre) (TYPED(List) *list, TYPE item, int pre) {
     if(list == NULL) {
         fprintf(stderr,"insertPre::ERROR - unitialized list.\n");
         return 1;
-    } else if(empty(list)) {
+    } else if(TYPED(empty) (list)) {
         fprintf(stderr,"insertPre::ERROR - empty list, unreachable position.\n");
         return 1;
-    } else if(pre < 1 || pre > size(list)) {
+    } else if(pre < 1 || pre > TYPED(size) (list)) {
         fprintf(stderr,"insertPre::ERROR - pre is out of the bounds of the list.\n");
         return 1;
     } else {
@@ -158,11 +158,11 @@ int insertPre(List *list, int item, int pre) {
     return 0;
 }
 
-int deleteH(List *list) {
+int TYPED(deleteH) (TYPED(List) *list) {
     if(list == NULL) {
         fprintf(stderr,"deleteH::ERROR - unitialized list.\n");
         return 1;
-    } else if(empty(list)) {
+    } else if(TYPED(empty) (list)) {
         fprintf(stderr,"deleteH::WARNING - the list is empty.\n");
         return 1;
     } else {
@@ -175,11 +175,11 @@ int deleteH(List *list) {
     return 0;
 }
 
-int deleteT(List *list) {
+int TYPED(deleteT) (TYPED(List) *list) {
     if(list == NULL) {
         fprintf(stderr,"deleteT::ERROR - unitialized list.\n");
         return 1;
-    } else if(empty(list)) {
+    } else if(TYPED(empty) (list)) {
         fprintf(stderr,"deleteT::WARNING - the list is empty.\n");
         return 1;
     } else {
@@ -202,14 +202,14 @@ int deleteT(List *list) {
     return 0;
 }
 
-int deletePos(List *list, int pos) {
+int TYPED(deletePos) (TYPED(List) *list, int pos) {
     if(list == NULL) {
         fprintf(stderr,"deletePos::ERROR - unitialized list.\n");
         return 1;
-    } else if(empty(list)) {
+    } else if(TYPED(empty) (list)) {
         fprintf(stderr,"deletePos::ERROR - list is empty, nothing to delete.\n");
         return 1;
-    } else if(pos <= 0 || pos > (size(list)-1)) {
+    } else if(pos <= 0 || pos > (TYPED(size) (list)-1)) {
         fprintf(stderr,"deletePos::ERROR - pos is out of the bounds of the list.\n");
         return 1;
     } else {
@@ -229,7 +229,7 @@ int deletePos(List *list, int pos) {
     return 0;
 }
 
-int size(List *list) {
+int TYPED(size) (TYPED(List) *list) {
     if(list == NULL) {
         fprintf(stderr,"size::ERROR - unitialized list.\n");
         return -1;
@@ -237,7 +237,7 @@ int size(List *list) {
     return (list->size);
 }
 
-int empty(List *list) {
+int TYPED(empty) (TYPED(List) *list) {
     int ret = 0;
     if(list == NULL) {
         fprintf(stderr,"empty::ERROR - unitialized list.\n");
@@ -249,11 +249,11 @@ int empty(List *list) {
     return ret;
 }
 
-int search(List *list, int key) {
+int TYPED(search) (TYPED(List) *list, TYPE key) {
     int pos = -1;
     if(list == NULL) {
         fprintf(stderr,"search::ERROR - unitialized list.\n");
-    } else if(empty(list)) {
+    } else if(TYPED(empty) (list)) {
         fprintf(stderr,"search::ERROR - list is empty.\n");
     } else {
         node temp = list->head;
@@ -269,11 +269,11 @@ int search(List *list, int key) {
     return pos;
 }
 
-int query(List *list, int pos, int *ret) {
+int TYPED(query) (TYPED(List) *list, int pos, TYPE *ret) {
     if(list == NULL) {
         fprintf(stderr,"query::ERROR - unitialized list.\n");
         return 1;
-    } else if(pos < 0 || pos >= size(list)) {
+    } else if(pos < 0 || pos >= TYPED(size) (list)) {
         fprintf(stderr,"query::ERROR - pos is out of the bounds of the list.\n");
         return 1;
     } else {
@@ -288,7 +288,7 @@ int query(List *list, int pos, int *ret) {
     return 0;
 }
 
-void reverse(List *list) {
+void TYPED(reverse) (TYPED(List) *list) {
     if(list == NULL) {
         fprintf(stderr,"reverse::ERROR - unitialized list.\n");
     } else {
@@ -303,11 +303,11 @@ void reverse(List *list) {
     }
 }
 
-int merge(List *a, List *b) {
+int TYPED(merge) (TYPED(List) *a, TYPED(List) *b) {
     if(a == NULL || b == NULL) {
         fprintf(stderr,"merge::ERROR - unitialized list.\n");
         return 1;
-    } else if(empty(a) || empty(b)) {
+    } else if(TYPED(empty) (a) || TYPED(empty) (b)) {
         fprintf(stderr,"merge::ERROR - can't merge empty list.\n");
         return 1;
     } else if(a != b) {
@@ -317,7 +317,7 @@ int merge(List *a, List *b) {
         }
         temp->link = b->head;
         b->head = NULL;
-        destroy(b);
+        TYPED(destroy) (b);
     } else {
         fprintf(stderr,"merge::ERROR - can't merge list with itself.\n");
         return 1;
@@ -326,16 +326,16 @@ int merge(List *a, List *b) {
     return 0;
 }
 
-List * copy(List *list) {
-    List *newList = NULL;
+TYPED(List) * TYPED(copy) (TYPED(List) *list) {
+    TYPED(List) *newList = NULL;
     if(list == NULL) {
         fprintf(stderr,"copy::ERROR - unitialized list.\n");
         return NULL;
     } else {
-        newList = init();
+        newList = TYPED(init) ();
         node temp = list->head;
         while(temp != NULL) {
-            insertT(newList, temp->data);
+            TYPED(insertT) (newList, temp->data);
             temp = temp->link;
         }
     }
@@ -343,13 +343,13 @@ List * copy(List *list) {
     return newList;
 }
 
-List * arr2list(int* arr, int size) {
-    List *newList = NULL;
+TYPED(List) * TYPED(arr2list) (TYPE* arr, TYPE size) {
+    TYPED(List) *newList = NULL;
     if(size > 0) {
-        newList = init();
+        newList = TYPED(init) ();
         
         for(int i = 0; i < size; i++) {
-            insertT(newList,arr[i]);
+            TYPED(insertT) (newList,arr[i]);
         }
     } else {
         fprintf(stderr,"arr2list::WARNING - size must be greater than 0.\n");
@@ -358,12 +358,12 @@ List * arr2list(int* arr, int size) {
     return newList;
 }
 
-void destroy(List *list) {
+void TYPED(destroy) (TYPED(List) *list) {
     if(list == NULL) {
         fprintf(stderr,"destroy::ERROR - unitialized list.\n");
     } else {
-        while(!empty(list)) {
-            deleteH(list);
+        while(!TYPED(empty) (list)) {
+            TYPED(deleteH) (list);
             list->size--;
         }
         free(list);
