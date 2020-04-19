@@ -12,17 +12,21 @@
   * @bug No known bugs.
   */
 
-#ifndef LIST_H_
-#define LIST_H_
 
 #include <stdlib.h>
+
+#ifdef TYPE
+
+#ifndef TYPED
+#define TYPED(THING) THING
+#endif
 
 /**
  * @brief Defines the list type.
  *
  * Redefines the name used to refer to lists. 
  */
-typedef struct list_t List;
+typedef struct TYPED(List)  TYPED(List);
 
 /**
  * @brief Creates a list.
@@ -36,7 +40,7 @@ typedef struct list_t List;
  * @warning if alloc fails, an error message is displayed,
  and the function returns.
  */
-List * init(void);
+TYPED(List) * TYPED(init) (void);
 
 /**
  * @brief Prints the content of a list.
@@ -48,7 +52,7 @@ List * init(void);
  * @return 0 on success, 1 on failure.
  * @warning if list unitialized or empty, prints error and returns.
  */
-int display(List *list);
+int TYPED(display) (TYPED(List) *list);
 
 /**
  * @brief Insert an element to the tail of the list.
@@ -62,7 +66,7 @@ int display(List *list);
  * @return 0 on success, 1 on failure.
  * @warning if list is unitialized, prints error and returns.
  */
-int insertT(List *list, int item);
+int TYPED(insertT) (TYPED(List) *list, TYPE item);
 
 /**
  * @brief Inserts an element at the head of the list.
@@ -75,7 +79,7 @@ int insertT(List *list, int item);
  * @return 0 on success, 1 on failure.
  * @warning if list is unitialized, prints error and returns.
  */
-int insertH(List *list, int item);
+int TYPED(insertH) (TYPED(List) *list, TYPE item);
 
 /**
  * @brief Inserts an element after a position given.
@@ -90,7 +94,7 @@ int insertH(List *list, int item);
  * @warning if list is unitialized, pos is negative or list size is less
  * than pos, prints error and returns.
  */
-int insertPos(List *list, int item, int pos);
+int TYPED(insertPos) (TYPED(List) *list, TYPE item, int pos);
 
 /**
  * @brief Inserts element before a position given.
@@ -105,7 +109,7 @@ int insertPos(List *list, int item, int pos);
  * @warning if list is unitialized or empty, pre is negative
  * or list size is less or equal to pre, prints error and returns.
  */
-int insertPre(List *list, int item, int pre);
+int TYPED(insertPre) (TYPED(List) *list, TYPE item, int pre);
 
 /**
  * @brief Deletes the head of the list.
@@ -117,7 +121,7 @@ int insertPre(List *list, int item, int pre);
  * @warning if list is unitialized prints error and returns.
  * @note if list is empty, prints a warning message and returns.
  */
-int deleteH(List *list);
+int TYPED(deleteH) (TYPED(List) *list);
 
 /**
  * @brief Deletes the tail of the list.
@@ -130,7 +134,7 @@ int deleteH(List *list);
  * @warning if the list is unitialized prints error and returns.
  * @note if list is empty, prints warning message and returns.
  */
-int deleteT(List *list);
+int TYPED(deleteT) (TYPED(List) *list);
 
 /**
  * @brief Deletes the element after a given position.
@@ -146,7 +150,7 @@ int deleteT(List *list);
  * equal to zero or greater than list size the function
  * prints error and returns.
  */
-int deletePos(List *list, int pos);
+int TYPED(deletePos) (TYPED(List) *list, int pos);
 
 /**
  * @brief Retrieves the size of the list.
@@ -158,7 +162,7 @@ int deletePos(List *list, int pos);
  * or -1 on failure.
  * @warning if the list is unitialized prints error and returns.
  */
-int size(List *list);
+int TYPED(size) (TYPED(List) *list);
 
 /**
  * @brief Checks if the list is empty.
@@ -169,7 +173,7 @@ int size(List *list);
  * @return 1 if the list is empty or unitialized, 0 if not.
  * @warning if the list is unitialized prints error and returns.
  */
-int empty(List *list);
+int TYPED(empty) (TYPED(List) *list);
 
 /**
  * @brief Searchs an item in the list.
@@ -183,7 +187,7 @@ int empty(List *list);
  * @warning if list is unitialized or empty, prints error message
  * and returns.
  */
-int search(List *list, int key);
+int TYPED(search) (TYPED(List) *list, TYPE key);
 
 /**
  * @brief Retrieves the element in the position given.
@@ -198,7 +202,7 @@ int search(List *list, int key);
  * @warning if the list is unitialized, pos is less than 0 or greater
  * than the size of the list, prints error and returns.
  */
-int query(List *list, int pos, int *ret);
+int TYPED(query) (TYPED(List) *list, int pos, TYPE *ret);
 
 /**
  * @brief Reverse the order of the list.
@@ -209,7 +213,7 @@ int query(List *list, int pos, int *ret);
  * @return Void
  * @warning if the list is unitialized prints error and returns.
  */
-void reverse(List *list);
+void TYPED(reverse) (TYPED(List) *list);
 
 /**
  * @brief Takes two list, join them and turns into only one.
@@ -223,7 +227,7 @@ void reverse(List *list);
  * @warning in case of unitialized list or the same list
  * on both parameters, prints error and returns.
  */
-int merge(List *a, List *b);
+int TYPED(merge) (TYPED(List) *a, TYPED(List) *b);
 
 /**
  * @brief Copies all the list on another new list
@@ -236,7 +240,7 @@ int merge(List *a, List *b);
  * @warning if the list is unitialized prints error and returns.
  * @note the user must check if the list is empty.
  */
-List * copy(List *list);
+TYPED(List) * TYPED(copy) (TYPED(List) *list);
 
 /**
  * @brief Transforms an array into a single linked list
@@ -249,7 +253,7 @@ List * copy(List *list);
  * @return a pointer to the new list on success or NULL on failure.
  * @note if the size provided is less than 0, prints warning and returns.
  */
-List * arr2list(int* arr, int size);
+TYPED(List) * TYPED(arr2list) (TYPE* arr, TYPE size);
 
 /**
  * @brief Destroys all the list.
@@ -261,7 +265,7 @@ List * arr2list(int* arr, int size);
  * @return Void
  * @warning if list is unitialized prints error and returns.
  */
-void destroy(List *head);
+void TYPED(destroy) (TYPED(List) *list);
 
-#endif // LIST_H_
+#endif // TYPE
 
