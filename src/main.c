@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
-#include "../inc/single_linked.h"
+#include "../inc/int_list.h"
 
 void test_create(void) {
     List *list = init();
