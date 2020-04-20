@@ -12,19 +12,19 @@ void test_insert(void) {
     List *list = init();
 
     for(int i = 20; i >= 0; i-=2) {
-        insertH(list,i);
+        prepend(list,i);
     }
 
     for(int i = 1; i < 19; i+=2) {
-        insertPre(list,i,i);
+        insert_pre(list,i,i);
     }
 
     for(int i = 21; i < 30; i+=2) {
-        insertT(list,i);
+        append(list,i);
     }
 
     for(int i = 21; i < 30; i+=2) {
-        insertPos(list,i+1,i);
+        insert_pos(list,i+1,i);
     }
 
     display(list);
@@ -36,25 +36,25 @@ void test_delete(void) {
     List *list = init();
 
     for(int i = 1; i < 10; i++) {
-        insertT(list,i);
+        append(list,i);
     }
 
     display(list);
 
     for(int i = 1; i < 3; i++) {
-        deletePos(list,i);
+        remove_from(list,i);
     }
 
     display(list);
 
     for(int i = 0; i < 3; i++) {
-        deleteT(list);
+        remove_tail(list);
     }
 
     display(list);
 
     for(int i = 0; i < 2; i++) {
-        deleteH(list);
+        remove_head(list);
     }
 
     destroy(list);
@@ -64,7 +64,7 @@ void test_size(void) {
     List *list = init();
 
     for(int i = 0; i < 1000; i++) {
-        insertT(list,i);
+        append(list,i);
     }
 
     assert(1000 == size(list));
@@ -76,7 +76,7 @@ void test_search(void) {
     List *list = init();
 
     for(int i = 0; i < 10; i++) {
-        insertT(list,i);
+        append(list,i);
     }
 
     assert(-1 == search(list,11));
@@ -90,7 +90,7 @@ void test_reverse(void) {
     List *list = init();
 
     for(int i = 0; i < 10; i++) {
-        insertH(list,i);
+        prepend(list,i);
     }
 
     reverse(list);
@@ -105,11 +105,11 @@ void test_merge(void) {
     List *tsil = init();
 
     for(int i = 0; i < 10; i++) {
-        insertT(list,i);
+        append(list,i);
     }
 
     for(int i = 11; i < 20; i++) {
-        insertT(tsil,i);
+        append(tsil,i);
     }
 
     merge(list,tsil);
@@ -124,7 +124,7 @@ void test_query(void) {
     int ret = -1;
 
     for(int i = 0; i < 10; i++) {
-        insertT(list,i);
+        append(list,i);
     }
 
     for(int i = 0; i < 10; i++) {
@@ -142,7 +142,7 @@ void test_copy(void) {
     int val2 = -1;
     
     for(int i = 1; i < 10; i++) {
-        insertT(list,i);
+        append(list,i);
     }
 
     tsil = copy(list);
@@ -151,8 +151,8 @@ void test_copy(void) {
         query(list,0,&val1);
         query(tsil,0,&val2);
         assert(val1 = val2);
-        deleteH(list);
-        deleteH(tsil);
+        remove_head(list);
+        remove_head(tsil);
     }
 
     destroy(list);
