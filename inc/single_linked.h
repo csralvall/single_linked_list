@@ -66,7 +66,7 @@ int TYPED(display) (TYPED(List) *list);
  * @return 0 on success, 1 on failure.
  * @warning if list is unitialized, prints error and returns.
  */
-int TYPED(insertT) (TYPED(List) *list, TYPE item);
+int TYPED(append) (TYPED(List) *list, TYPE item);
 
 /**
  * @brief Inserts an element at the head of the list.
@@ -79,7 +79,7 @@ int TYPED(insertT) (TYPED(List) *list, TYPE item);
  * @return 0 on success, 1 on failure.
  * @warning if list is unitialized, prints error and returns.
  */
-int TYPED(insertH) (TYPED(List) *list, TYPE item);
+int TYPED(prepend) (TYPED(List) *list, TYPE item);
 
 /**
  * @brief Inserts an element after a position given.
@@ -94,7 +94,7 @@ int TYPED(insertH) (TYPED(List) *list, TYPE item);
  * @warning if list is unitialized, pos is negative or list size is less
  * than pos, prints error and returns.
  */
-int TYPED(insertPos) (TYPED(List) *list, TYPE item, int pos);
+int TYPED(insert_pos) (TYPED(List) *list, TYPE item, int pos);
 
 /**
  * @brief Inserts element before a position given.
@@ -109,7 +109,7 @@ int TYPED(insertPos) (TYPED(List) *list, TYPE item, int pos);
  * @warning if list is unitialized or empty, pre is negative
  * or list size is less or equal to pre, prints error and returns.
  */
-int TYPED(insertPre) (TYPED(List) *list, TYPE item, int pre);
+int TYPED(insert_pre) (TYPED(List) *list, TYPE item, int pre);
 
 /**
  * @brief Deletes the head of the list.
@@ -121,7 +121,7 @@ int TYPED(insertPre) (TYPED(List) *list, TYPE item, int pre);
  * @warning if list is unitialized prints error and returns.
  * @note if list is empty, prints a warning message and returns.
  */
-int TYPED(deleteH) (TYPED(List) *list);
+int TYPED(remove_head) (TYPED(List) *list);
 
 /**
  * @brief Deletes the tail of the list.
@@ -134,7 +134,7 @@ int TYPED(deleteH) (TYPED(List) *list);
  * @warning if the list is unitialized prints error and returns.
  * @note if list is empty, prints warning message and returns.
  */
-int TYPED(deleteT) (TYPED(List) *list);
+int TYPED(remove_tail) (TYPED(List) *list);
 
 /**
  * @brief Deletes the element after a given position.
@@ -150,7 +150,7 @@ int TYPED(deleteT) (TYPED(List) *list);
  * equal to zero or greater than list size the function
  * prints error and returns.
  */
-int TYPED(deletePos) (TYPED(List) *list, int pos);
+int TYPED(remove_from) (TYPED(List) *list, int pos);
 
 /**
  * @brief Retrieves the size of the list.
