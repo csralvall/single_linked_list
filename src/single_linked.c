@@ -71,9 +71,9 @@ int TYPED(display) (TYPED(List) *list) {
     return 0;
 }
 
-int TYPED(insertT) (TYPED(List) *list, TYPE item) {
+int TYPED(append) (TYPED(List) *list, TYPE item) {
     if(list == NULL) {
-        fprintf(stderr,"insertT::ERROR - unitialized list.\n");
+        fprintf(stderr,"append::ERROR - unitialized list.\n");
         return 1;
     } else {
         node new = create(item);
@@ -92,9 +92,9 @@ int TYPED(insertT) (TYPED(List) *list, TYPE item) {
     return 0;
 }
 
-int TYPED(insertH) (TYPED(List) *list, TYPE item) {
+int TYPED(prepend) (TYPED(List) *list, TYPE item) {
     if(list == NULL) {
-        fprintf(stderr,"insertH::ERROR - unitialized list.\n");
+        fprintf(stderr,"prepend::ERROR - unitialized list.\n");
         return 1;
     } else {
         node temp = list->head;
@@ -107,12 +107,12 @@ int TYPED(insertH) (TYPED(List) *list, TYPE item) {
     return 0;
 }
 
-int TYPED(insertPos) (TYPED(List) *list, TYPE item, int pos) {
+int TYPED(insert_pos) (TYPED(List) *list, TYPE item, int pos) {
     if(list == NULL) {
-        fprintf(stderr,"insertPos::ERROR - unitialized list.\n");
+        fprintf(stderr,"insert_pos::ERROR - unitialized list.\n");
         return 1;
     } else if(pos < 0 || pos >= TYPED(size) (list)) {
-        fprintf(stderr,"insertPos::ERROR - pos is out of the bounds of the list.\n");
+        fprintf(stderr,"insert_pos::ERROR - pos is out of the bounds of the list.\n");
         return 1;
     } else {
         node temp = list->head;
@@ -131,15 +131,15 @@ int TYPED(insertPos) (TYPED(List) *list, TYPE item, int pos) {
     return 0;
 }
 
-int TYPED(insertPre) (TYPED(List) *list, TYPE item, int pre) {
+int TYPED(insert_pre) (TYPED(List) *list, TYPE item, int pre) {
     if(list == NULL) {
-        fprintf(stderr,"insertPre::ERROR - unitialized list.\n");
+        fprintf(stderr,"insert_pre::ERROR - unitialized list.\n");
         return 1;
     } else if(TYPED(empty) (list)) {
-        fprintf(stderr,"insertPre::ERROR - empty list, unreachable position.\n");
+        fprintf(stderr,"insert_pre::ERROR - empty list, unreachable position.\n");
         return 1;
     } else if(pre < 1 || pre > TYPED(size) (list)) {
-        fprintf(stderr,"insertPre::ERROR - pre is out of the bounds of the list.\n");
+        fprintf(stderr,"insert_pre::ERROR - pre is out of the bounds of the list.\n");
         return 1;
     } else {
         node temp = list->head;
@@ -158,12 +158,12 @@ int TYPED(insertPre) (TYPED(List) *list, TYPE item, int pre) {
     return 0;
 }
 
-int TYPED(deleteH) (TYPED(List) *list) {
+int TYPED(remove_head) (TYPED(List) *list) {
     if(list == NULL) {
-        fprintf(stderr,"deleteH::ERROR - unitialized list.\n");
+        fprintf(stderr,"remove_head::ERROR - unitialized list.\n");
         return 1;
     } else if(TYPED(empty) (list)) {
-        fprintf(stderr,"deleteH::WARNING - the list is empty.\n");
+        fprintf(stderr,"remove_head::WARNING - the list is empty.\n");
         return 1;
     } else {
         node temp = list->head;
@@ -175,12 +175,12 @@ int TYPED(deleteH) (TYPED(List) *list) {
     return 0;
 }
 
-int TYPED(deleteT) (TYPED(List) *list) {
+int TYPED(remove_tail) (TYPED(List) *list) {
     if(list == NULL) {
-        fprintf(stderr,"deleteT::ERROR - unitialized list.\n");
+        fprintf(stderr,"remove_tail::ERROR - unitialized list.\n");
         return 1;
     } else if(TYPED(empty) (list)) {
-        fprintf(stderr,"deleteT::WARNING - the list is empty.\n");
+        fprintf(stderr,"remove_tail::WARNING - the list is empty.\n");
         return 1;
     } else {
         node temp = list->head;
@@ -202,15 +202,15 @@ int TYPED(deleteT) (TYPED(List) *list) {
     return 0;
 }
 
-int TYPED(deletePos) (TYPED(List) *list, int pos) {
+int TYPED(remove_from) (TYPED(List) *list, int pos) {
     if(list == NULL) {
-        fprintf(stderr,"deletePos::ERROR - unitialized list.\n");
+        fprintf(stderr,"remove_from::ERROR - unitialized list.\n");
         return 1;
     } else if(TYPED(empty) (list)) {
-        fprintf(stderr,"deletePos::ERROR - list is empty, nothing to delete.\n");
+        fprintf(stderr,"remove_from::ERROR - list is empty, nothing to delete.\n");
         return 1;
     } else if(pos <= 0 || pos > (TYPED(size) (list)-1)) {
-        fprintf(stderr,"deletePos::ERROR - pos is out of the bounds of the list.\n");
+        fprintf(stderr,"remove_from::ERROR - pos is out of the bounds of the list.\n");
         return 1;
     } else {
         node temp = list->head;
@@ -335,7 +335,7 @@ TYPED(List) * TYPED(copy) (TYPED(List) *list) {
         newList = TYPED(init) ();
         node temp = list->head;
         while(temp != NULL) {
-            TYPED(insertT) (newList, temp->data);
+            TYPED(append) (newList, temp->data);
             temp = temp->link;
         }
     }
@@ -349,7 +349,7 @@ TYPED(List) * TYPED(arr2list) (TYPE* arr, TYPE size) {
         newList = TYPED(init) ();
         
         for(int i = 0; i < size; i++) {
-            TYPED(insertT) (newList,arr[i]);
+            TYPED(append) (newList,arr[i]);
         }
     } else {
         fprintf(stderr,"arr2list::WARNING - size must be greater than 0.\n");
@@ -363,7 +363,7 @@ void TYPED(destroy) (TYPED(List) *list) {
         fprintf(stderr,"destroy::ERROR - unitialized list.\n");
     } else {
         while(!TYPED(empty) (list)) {
-            TYPED(deleteH) (list);
+            TYPED(remove_head) (list);
             list->size--;
         }
         free(list);
