@@ -42,6 +42,4 @@ make memcheck
 There are a lot of frameworks to write good *unit test*, however i didn't have enough time to learn them, so, if you are interested you can build your own unitest and make a pull request to this repository. I would appreciate your help.
 * Code review
 
-Also, if you find any errors, in my code, my comments, something related to my style of code or some bad appliance of concepts i encourage you to tell me. 
-
-If you think that some functions could be better, just contact me and i would consider your propose.
+Also, if you find any errors, in my code, my comments or something related to my style of code, also make a pull request. 
