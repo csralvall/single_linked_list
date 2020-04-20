@@ -1,5 +1,5 @@
 # Single Linked List #
-*v1.1*
+*v2.0*
 
 
 ### What is this repository for? ###
@@ -12,6 +12,9 @@
 ### How do I get set up? ###
 
 * Summary of set up:
+
+    - To make it work with builtin-types you only need to create the appropiate header to include in your project (e.g.: inc/int_list.h).
+    - With own made types you will need to define a new display and destroy functions, and define your type with typedef to use only one word inside the macros.
 
 ```bash
 make all
