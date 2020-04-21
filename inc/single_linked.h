@@ -117,11 +117,14 @@ int TYPED(insert_pre) (TYPED(List) *list, TYPE item, int pre);
  * Removes the head of the list.
  *
  * @param list pointer to the list.
+ * @param f pointer to user defined function to destroy TYPE struct.
  * @return the list without his first element.
  * @warning if list is unitialized prints error and returns.
+ * @warning if f fails, prints error and returns.
  * @note if list is empty, prints a warning message and returns.
+ * @note f should return 0 on success and 1 on failure.
  */
-int TYPED(remove_head) (TYPED(List) *list);
+int TYPED(remove_head) (TYPED(List) *list, int (*f) (TYPE));
 
 /**
  * @brief Deletes the tail of the list.
@@ -130,11 +133,14 @@ int TYPED(remove_head) (TYPED(List) *list);
  * and removes it.
  *
  * @param list pointer to the list.
+ * @param f pointer to user defined function to destroy TYPE struct.
  * @return the list without the last item.
+ * @warning if f fails, prints error and returns.
  * @warning if the list is unitialized prints error and returns.
  * @note if list is empty, prints warning message and returns.
+ * @note f should return 0 on success and 1 on failure.
  */
-int TYPED(remove_tail) (TYPED(List) *list);
+int TYPED(remove_tail) (TYPED(List) *list, int (*f) (TYPE));
 
 /**
  * @brief Deletes the element after a given position.
@@ -145,12 +151,15 @@ int TYPED(remove_tail) (TYPED(List) *list);
  *
  * @param list pointer to the list.
  * @param pos position after which remove the element.
+ * @param f pointer to user defined function to destroy TYPE struct.
  * @return 0 on success, 1 on failure.
+ * @warning if f fails, prints error and returns.
  * @warning if list is unitialized or empty, pos is negative,
  * equal to zero or greater than list size the function
  * prints error and returns.
+ * @note f should return 0 on success and 1 on failure.
  */
-int TYPED(remove_from) (TYPED(List) *list, int pos);
+int TYPED(remove_from) (TYPED(List) *list, int pos, int (*f) (TYPE));
 
 /**
  * @brief Retrieves the size of the list.

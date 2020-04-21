@@ -158,7 +158,7 @@ int TYPED(insert_pre) (TYPED(List) *list, TYPE item, int pre) {
     return 0;
 }
 
-int TYPED(remove_head) (TYPED(List) *list) {
+int TYPED(remove_head) (TYPED(List) *list, int (*f) (TYPE)) {
     if(list == NULL) {
         fprintf(stderr,"remove_head::ERROR - unitialized list.\n");
         return 1;
@@ -168,6 +168,12 @@ int TYPED(remove_head) (TYPED(List) *list) {
     } else {
         node temp = list->head;
         list->head = temp->link;
+        if(f != NULL) {
+            if(f(temp->data)) {
+                fprintf(stderr,"remove_head::ERROR - failed free of structure.\n");
+                return 1;
+            }
+        }
         free(temp);
         list->size--;
     }
@@ -175,7 +181,7 @@ int TYPED(remove_head) (TYPED(List) *list) {
     return 0;
 }
 
-int TYPED(remove_tail) (TYPED(List) *list) {
+int TYPED(remove_tail) (TYPED(List) *list, int (*f) (TYPE)) {
     if(list == NULL) {
         fprintf(stderr,"remove_tail::ERROR - unitialized list.\n");
         return 1;
@@ -189,6 +195,12 @@ int TYPED(remove_tail) (TYPED(List) *list) {
             temp = ptemp;
             ptemp = ptemp->link;
         }
+        if(f != NULL) {
+            if(f(ptemp->data)) {
+                fprintf(stderr,"remove_head::ERROR - failed free of structure.\n");
+                return 1;
+            }
+        }
         free(ptemp);
         if(ptemp != list->head) {
             temp->link = NULL;
@@ -201,7 +213,7 @@ int TYPED(remove_tail) (TYPED(List) *list) {
     return 0;
 }
 
-int TYPED(remove_from) (TYPED(List) *list, int pos) {
+int TYPED(remove_from) (TYPED(List) *list, int pos, int (*f) (TYPE)) {
     if(list == NULL) {
         fprintf(stderr,"remove_from::ERROR - unitialized list.\n");
         return 1;
@@ -220,8 +232,13 @@ int TYPED(remove_from) (TYPED(List) *list, int pos) {
             pos--;
         }
         temp->link = ptemp->link;
+        if(f != NULL) {
+            if(f(ptemp->data)) {
+                fprintf(stderr,"remove_head::ERROR - failed free of structure.\n");
+                return 1;
+            }
+        }
         free(ptemp);
-        ptemp = NULL;
         list->size--;
     }
 
@@ -362,7 +379,7 @@ void TYPED(destroy) (TYPED(List) *list) {
         fprintf(stderr,"destroy::ERROR - unitialized list.\n");
     } else {
         while(!TYPED(empty) (list)) {
-            TYPED(remove_head) (list);
+            TYPED(remove_head) (list, NULL);
             list->size--;
         }
         free(list);

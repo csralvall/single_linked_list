@@ -42,19 +42,19 @@ void test_delete(void) {
     display(list);
 
     for(int i = 1; i < 3; i++) {
-        remove_from(list,i);
+        remove_from(list,i,NULL);
     }
 
     display(list);
 
     for(int i = 0; i < 3; i++) {
-        remove_tail(list);
+        remove_tail(list,NULL);
     }
 
     display(list);
 
     for(int i = 0; i < 2; i++) {
-        remove_head(list);
+        remove_head(list,NULL);
     }
 
     destroy(list);
@@ -151,8 +151,8 @@ void test_copy(void) {
         query(list,0,&val1);
         query(tsil,0,&val2);
         assert(val1 = val2);
-        remove_head(list);
-        remove_head(tsil);
+        remove_head(list,NULL);
+        remove_head(tsil,NULL);
     }
 
     destroy(list);
