@@ -189,11 +189,10 @@ int TYPED(remove_tail) (TYPED(List) *list) {
             temp = ptemp;
             ptemp = ptemp->link;
         }
+        free(ptemp);
         if(ptemp != list->head) {
-            free(ptemp);
             temp->link = NULL;
         } else {
-            free(ptemp);
             list->head = NULL;
         }
         list->size--;
