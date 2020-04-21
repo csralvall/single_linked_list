@@ -49,10 +49,15 @@ TYPED(List) * TYPED(init) (void);
  * to stdout.
  *
  * @param list pointer to the list.
+ * @param f pointer to user defined function to display TYPE struct.
  * @return 0 on success, 1 on failure.
+ * @warning if f fails, prints error and returns.
  * @warning if list unitialized or empty, prints error and returns.
+ * @note f should return 0 on success and 1 on failure. This function
+ * should preferably display the structure in a "box with arrow" format
+ * like this: []->.
  */
-int TYPED(display) (TYPED(List) *list);
+int TYPED(display) (TYPED(List) *list, int (*f) (TYPE));
 
 /**
  * @brief Insert an element to the tail of the list.
@@ -271,10 +276,13 @@ TYPED(List) * TYPED(arr2list) (TYPE* arr, TYPE size);
  * frees the structure.
  *
  * @param list pointer to the list.
+ * @param f pointer to user defined function to destroy TYPE struct.
  * @return Void
  * @warning if list is unitialized prints error and returns.
+ * @warning if f fails, prints error and returns.
+ * @note f should return 0 on success and 1 on failure.
  */
-void TYPED(destroy) (TYPED(List) *list);
+void TYPED(destroy) (TYPED(List) *list, int (*f) (TYPE));
 
 #endif // TYPE
 

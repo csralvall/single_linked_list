@@ -51,7 +51,7 @@ TYPED(List) * TYPED(init) (void) {
     return new;
 }
 
-int TYPED(display) (TYPED(List) *list) {
+int TYPED(display) (TYPED(List) *list, int (*f) (TYPE)) {
     if(list == NULL) {
         fprintf(stderr,"display::ERROR - unitialized list.\n");
         return 1;
@@ -61,7 +61,14 @@ int TYPED(display) (TYPED(List) *list) {
     } else {
         node temp = list->head;
         while(temp->link != NULL) {
-            printf("[%i]->", temp->data);
+            if(f != NULL) {
+                if(f (temp->data)) {
+                    fprintf(stderr,"display::ERROR - display struct failed.\n");
+                    return 1;
+                }
+            } else {
+                printf("[%i]->", temp->data);
+            }
             temp = temp->link;
         }
         printf("[%i]", temp->data);
@@ -333,7 +340,7 @@ int TYPED(merge) (TYPED(List) *a, TYPED(List) *b) {
         }
         temp->link = b->head;
         b->head = NULL;
-        TYPED(destroy) (b);
+        TYPED(destroy) (b,NULL);
     } else {
         fprintf(stderr,"merge::ERROR - can't merge list with itself.\n");
         return 1;
@@ -374,12 +381,12 @@ TYPED(List) * TYPED(arr2list) (TYPE* arr, TYPE size) {
     return newList;
 }
 
-void TYPED(destroy) (TYPED(List) *list) {
+void TYPED(destroy) (TYPED(List) *list, int (*f) (TYPE)) {
     if(list == NULL) {
         fprintf(stderr,"destroy::ERROR - unitialized list.\n");
     } else {
         while(!TYPED(empty) (list)) {
-            TYPED(remove_head) (list, NULL);
+            TYPED(remove_head) (list,f);
             list->size--;
         }
         free(list);
