@@ -5,7 +5,7 @@
 
 void test_create(void) {
     List *list = init();
-    destroy(list);
+    destroy(list,NULL);
 }
 
 void test_insert(void) {
@@ -27,9 +27,9 @@ void test_insert(void) {
         insert_pos(list,i+1,i);
     }
 
-    display(list);
+    display(list,NULL);
 
-    destroy(list);
+    destroy(list,NULL);
 }
 
 void test_delete(void) {
@@ -39,25 +39,25 @@ void test_delete(void) {
         append(list,i);
     }
 
-    display(list);
+    display(list,NULL);
 
     for(int i = 1; i < 3; i++) {
         remove_from(list,i,NULL);
     }
 
-    display(list);
+    display(list,NULL);
 
     for(int i = 0; i < 3; i++) {
         remove_tail(list,NULL);
     }
 
-    display(list);
+    display(list,NULL);
 
     for(int i = 0; i < 2; i++) {
         remove_head(list,NULL);
     }
 
-    destroy(list);
+    destroy(list,NULL);
 }
 
 void test_size(void) {
@@ -69,7 +69,7 @@ void test_size(void) {
 
     assert(1000 == size(list));
 
-    destroy(list);
+    destroy(list,NULL);
 }
 
 void test_search(void) {
@@ -83,7 +83,7 @@ void test_search(void) {
 
     assert(8 == search(list,9));
 
-    destroy(list);
+    destroy(list,NULL);
 }
 
 void test_reverse(void) {
@@ -95,9 +95,9 @@ void test_reverse(void) {
 
     reverse(list);
 
-    display(list);
+    display(list,NULL);
 
-    destroy(list);
+    destroy(list,NULL);
 }
 
 void test_merge(void) {
@@ -114,9 +114,9 @@ void test_merge(void) {
 
     merge(list,tsil);
 
-    display(list);
+    display(list,NULL);
 
-    destroy(list);
+    destroy(list,NULL);
 }
 
 void test_query(void) {
@@ -132,7 +132,7 @@ void test_query(void) {
         assert(ret == i);
     }
 
-    destroy(list);
+    destroy(list,NULL);
 }
 
 void test_copy(void) {
@@ -155,8 +155,8 @@ void test_copy(void) {
         remove_head(tsil,NULL);
     }
 
-    destroy(list);
-    destroy(tsil);
+    destroy(list,NULL);
+    destroy(tsil,NULL);
 }
 
 void test_conversion(void) {
@@ -173,9 +173,9 @@ void test_conversion(void) {
 
     list = arr2list(arr, 10);
 
-    display(list);
+    display(list,NULL);
 
-    destroy(list);
+    destroy(list,NULL);
 
     free(arr);
 }
