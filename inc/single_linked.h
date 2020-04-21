@@ -50,6 +50,7 @@ TYPED(List) * TYPED(init) (void);
  *
  * @param list pointer to the list.
  * @param f pointer to user defined function to display TYPE struct.
+ * If TYPE refers to primitive C-types, just use NULL instead of f.
  * @return 0 on success, 1 on failure.
  * @warning if f fails, prints error and returns.
  * @warning if list unitialized or empty, prints error and returns.
@@ -123,6 +124,7 @@ int TYPED(insert_pre) (TYPED(List) *list, TYPE item, int pre);
  *
  * @param list pointer to the list.
  * @param f pointer to user defined function to destroy TYPE struct.
+ * If TYPE refers to primitive C-types, just use NULL instead of f.
  * @return the list without his first element.
  * @warning if list is unitialized prints error and returns.
  * @warning if f fails, prints error and returns.
@@ -139,6 +141,7 @@ int TYPED(remove_head) (TYPED(List) *list, int (*f) (TYPE));
  *
  * @param list pointer to the list.
  * @param f pointer to user defined function to destroy TYPE struct.
+ * If TYPE refers to primitive C-types, just use NULL instead of f.
  * @return the list without the last item.
  * @warning if f fails, prints error and returns.
  * @warning if the list is unitialized prints error and returns.
@@ -157,6 +160,7 @@ int TYPED(remove_tail) (TYPED(List) *list, int (*f) (TYPE));
  * @param list pointer to the list.
  * @param pos position after which remove the element.
  * @param f pointer to user defined function to destroy TYPE struct.
+ * If TYPE refers to primitive C-types, just use NULL instead of f.
  * @return 0 on success, 1 on failure.
  * @warning if f fails, prints error and returns.
  * @warning if list is unitialized or empty, pos is negative,
@@ -277,6 +281,7 @@ TYPED(List) * TYPED(arr2list) (TYPE* arr, TYPE size);
  *
  * @param list pointer to the list.
  * @param f pointer to user defined function to destroy TYPE struct.
+ * If TYPE refers to primitive C-types, just use NULL instead of f.
  * @return Void
  * @warning if list is unitialized prints error and returns.
  * @warning if f fails, prints error and returns.
