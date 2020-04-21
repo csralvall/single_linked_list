@@ -1,5 +1,5 @@
 # Single Linked List #
-*v2.0*
+*v2.1*
 
 
 ### What is this repository for? ###
@@ -14,7 +14,11 @@
 * Summary of set up:
 
     - To make it work with builtin-types you only need to create the appropiate header to include in your project (e.g.: inc/int_list.h).
-    - With own made types you will need to define a new display and destroy functions, and define your type with typedef to use only one word inside the macros.
+    - With own made types you will need to:
+        1. Define a function to print your struct, you will pass its address to the defined display function as argument.
+        2. Define a function to free your struct, you will pass its address to the defined destroy function as argument, and to every "remove_something" function.
+        3. Define your struct with typedef to use only one word inside the macros.
+        4. Wrap your macro replacements in a new header, with the new defined struct included or defined inside.
 
 ```bash
 make all
