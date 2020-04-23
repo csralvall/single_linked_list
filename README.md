@@ -13,7 +13,8 @@
 
 * Summary of set up:
 
-    - To make it work with builtin-types you only need to create the appropiate header to include in your project (e.g.: inc/int_list.h).
+    - To make it work with ints you only need to create the appropiate header to include in your project (e.g.: inc/int_list.h).
+    - With built-in types different from int you will need to implement a function to print the elements following specifications of display function (inc/single_list.h).
     - With own made types you will need to:
         1. Define a function to print your struct, you will pass its address to the defined display function as argument.
         2. Define a function to free your struct, you will pass its address to the defined destroy function as argument, and to every "remove_something" function.
