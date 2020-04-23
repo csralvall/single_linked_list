@@ -51,6 +51,20 @@ TYPED(List) * TYPED(init) (void) {
     return new;
 }
 
+static int display_f(TYPED(List) *list, int (*f) (TYPE)) {
+    node temp = list->head;
+    while(temp != NULL && (f (temp->data))) {
+        if(f (temp->data)) {
+            fprintf(stderr,"display::ERROR - display struct failed.\n");
+            return 1;
+        }
+        printf("->");
+        temp = temp->link;
+    }
+
+    return 0;
+}
+
 int TYPED(display) (TYPED(List) *list, int (*f) (TYPE)) {
     if(list == NULL) {
         fprintf(stderr,"display::ERROR - unitialized list.\n");
@@ -58,20 +72,14 @@ int TYPED(display) (TYPED(List) *list, int (*f) (TYPE)) {
     } else if(TYPED(empty) (list)) {
         fprintf(stderr,"display::ERROR - empty list as argument.\n");
         return 1;
-    } else {
+    } else if(f == NULL){
         node temp = list->head;
-        while(temp->link != NULL) {
-            if(f != NULL) {
-                if(f (temp->data)) {
-                    fprintf(stderr,"display::ERROR - display struct failed.\n");
-                    return 1;
-                }
-            } else {
-                printf("[%i]->", temp->data);
-            }
+        while(temp != NULL) {
+            printf("[%i]->", temp->data);
             temp = temp->link;
         }
-        printf("[%i]", temp->data);
+    } else if(display_f(list,f)) {
+        return 1;
     }
     printf("\n");
 
