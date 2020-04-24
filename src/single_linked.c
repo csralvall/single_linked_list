@@ -58,8 +58,10 @@ static int display_f(TYPED(List) *list, int (*f) (TYPE)) {
             fprintf(stderr,"display::ERROR - display struct failed.\n");
             return 1;
         }
-        printf("->");
         temp = temp->link;
+        if(temp != NULL) {
+            printf("->");
+        }
     }
 
     return 0;
@@ -75,8 +77,11 @@ int TYPED(display) (TYPED(List) *list, int (*f) (TYPE)) {
     } else if(f == NULL){
         node temp = list->head;
         while(temp != NULL) {
-            printf("[%i]->", temp->data);
+            printf("[%i]", temp->data);
             temp = temp->link;
+            if(temp != NULL) {
+                printf("->");
+            }
         }
     } else if(display_f(list,f)) {
         return 1;
