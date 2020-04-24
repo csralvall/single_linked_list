@@ -271,7 +271,7 @@ TYPED(List) * TYPED(copy) (TYPED(List) *list);
  * @return a pointer to the new list on success or NULL on failure.
  * @note if the size provided is less than 0, prints warning and returns.
  */
-TYPED(List) * TYPED(arr2list) (TYPE* arr, TYPE size);
+TYPED(List) * TYPED(arr2list) (TYPE *arr, int size);
 
 /**
  * @brief Destroys all the list.

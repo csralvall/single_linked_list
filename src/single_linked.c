@@ -53,13 +53,15 @@ TYPED(List) * TYPED(init) (void) {
 
 static int display_f(TYPED(List) *list, int (*f) (TYPE)) {
     node temp = list->head;
-    while(temp != NULL && (f (temp->data))) {
+    while(temp != NULL) {
         if(f (temp->data)) {
             fprintf(stderr,"display::ERROR - display struct failed.\n");
             return 1;
         }
-        printf("->");
         temp = temp->link;
+        if(temp != NULL) {
+            printf("->");
+        }
     }
 
     return 0;
@@ -75,8 +77,11 @@ int TYPED(display) (TYPED(List) *list, int (*f) (TYPE)) {
     } else if(f == NULL){
         node temp = list->head;
         while(temp != NULL) {
-            printf("[%i]->", temp->data);
+            printf("[%i]", temp->data);
             temp = temp->link;
+            if(temp != NULL) {
+                printf("->");
+            }
         }
     } else if(display_f(list,f)) {
         return 1;
@@ -374,7 +379,7 @@ TYPED(List) * TYPED(copy) (TYPED(List) *list) {
     return newList;
 }
 
-TYPED(List) * TYPED(arr2list) (TYPE* arr, TYPE size) {
+TYPED(List) * TYPED(arr2list) (TYPE* arr, int size) {
     TYPED(List) *newList = NULL;
     if(size > 0) {
         newList = TYPED(init) ();

@@ -10,28 +10,40 @@ void test_create(void) {
 
 void test_insert(void) {
     List *list = init();
+    mag* arr_mag = calloc(40, sizeof(mag));
 
-    for(int i = 20; i >= 0; i-=2) {
-        prepend(list,i);
+    for(int i = 30; i < 40; i++) {
+        arr_mag[i] = create_mag(3);
+        fill_mag(arr_mag[i]);
+        append(list,arr_mag[i]);
     }
 
-    for(int i = 1; i < 19; i+=2) {
-        insert_pre(list,i,i);
+    for(int i = 20; i < 30; i++) {
+        arr_mag[i] = create_mag(3);
+        fill_mag(arr_mag[i]);
+        prepend(list,arr_mag[i]);
     }
 
-    for(int i = 21; i < 30; i+=2) {
-        append(list,i);
+    for(int i = 10; i < 20; i++) {
+        arr_mag[i] = create_mag(3);
+        fill_mag(arr_mag[i]);
+        insert_pre(list,arr_mag[i],i);
     }
 
-    for(int i = 21; i < 30; i+=2) {
-        insert_pos(list,i+1,i);
+    for(int i = 0; i < 10; i++) {
+        arr_mag[i] = create_mag(3);
+        fill_mag(arr_mag[i]);
+        insert_pos(list,arr_mag[i],i);
     }
 
-    display(list,NULL);
+    display(list,&(show_mag));
 
-    destroy(list,NULL);
+    destroy(list,&(delete_mag));
+
+    free(arr_mag);
 }
 
+/*
 void test_delete(void) {
     List *list = init();
 
@@ -179,6 +191,7 @@ void test_conversion(void) {
 
     free(arr);
 }
+*/
 
 int main(void) {
 
@@ -186,6 +199,7 @@ int main(void) {
 
     test_insert();
 
+/*
     test_delete();
 
     test_size();
@@ -201,6 +215,7 @@ int main(void) {
     test_copy();
 
     test_conversion();
+*/
 
     return 0;
 }
