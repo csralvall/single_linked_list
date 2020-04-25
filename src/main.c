@@ -211,28 +211,27 @@ void test_copy(void) {
     free(arr_mag);
 }
 
-/*
 void test_conversion(void) {
-    int* arr = calloc(10, sizeof(int));
+    mag* arr_mag = calloc(10, sizeof(mag));
     List *list = NULL;
     
-    if(arr == NULL) {
-        fprintf(stderr,"testConversion::ERROR - calloc failed.\n");
+    for(int i = 0; i < 10; i++) {
+        arr_mag[i] = create_mag(2);
+        fill_mag(arr_mag[i]);
     }
+
+    list = arr2list(arr_mag, 10, copy_mag);
+
+    display(list,show_mag);
+
+    destroy(list,delete_mag);
 
     for(int i = 0; i < 10; i++) {
-        arr[i] = i;
+        delete_mag(arr_mag[i]);
     }
 
-    list = arr2list(arr, 10);
-
-    display(list,NULL);
-
-    destroy(list,NULL);
-
-    free(arr);
+    free(arr_mag);
 }
-*/
 
 int main(void) {
 
@@ -254,9 +253,7 @@ int main(void) {
 
     test_copy();
 
-/*
     test_conversion();
-*/
 
     return 0;
 }
