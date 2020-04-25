@@ -362,7 +362,7 @@ int TYPED(merge) (TYPED(List) *a, TYPED(List) *b) {
     return 0;
 }
 
-TYPED(List) * TYPED(copy) (TYPED(List) *list) {
+TYPED(List) * TYPED(copy) (TYPED(List) *list, TYPE (*f) (TYPE)) {
     TYPED(List) *newList = NULL;
     if(list == NULL) {
         fprintf(stderr,"copy::ERROR - unitialized list.\n");
@@ -370,9 +370,23 @@ TYPED(List) * TYPED(copy) (TYPED(List) *list) {
     } else {
         newList = TYPED(init) ();
         node temp = list->head;
-        while(temp != NULL) {
-            TYPED(append) (newList, temp->data);
-            temp = temp->link;
+        if(f == NULL) {
+            while(temp != NULL) {
+                TYPED(append) (newList, temp->data);
+                temp = temp->link;
+            }
+        } else {
+            TYPE copy = NULL;
+            while(temp != NULL) {
+                copy = f (temp->data);
+                if(copy == NULL) {
+                    return NULL;
+                } else {
+                    TYPED(append) (newList, copy);
+                    temp = temp->link;
+                }
+
+            }
         }
     }
     
