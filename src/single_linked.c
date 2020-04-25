@@ -393,13 +393,26 @@ TYPED(List) * TYPED(copy) (TYPED(List) *list, TYPE (*f) (TYPE)) {
     return newList;
 }
 
-TYPED(List) * TYPED(arr2list) (TYPE* arr, int size) {
+TYPED(List) * TYPED(arr2list) (TYPE* arr, int size, TYPE (*f) (TYPE)) {
     TYPED(List) *newList = NULL;
     if(size > 0) {
         newList = TYPED(init) ();
         
-        for(int i = 0; i < size; i++) {
-            TYPED(append) (newList,arr[i]);
+        if(f == NULL) {
+            for(int i = 0; i < size; i++) {
+                TYPED(append) (newList,arr[i]);
+            }
+        } else {
+            TYPE copy = NULL;
+            for(int i = 0; i < size; i++) {
+                copy = f (arr[i]);
+                if(copy == NULL) {
+                    fprintf(stderr,"arr2list::ERROR - copy of struct failed.\n");
+                    return NULL;
+                } else {
+                    TYPED(append) (newList,copy);
+                }
+            }
         }
     } else {
         fprintf(stderr,"arr2list::WARNING - size must be greater than 0.\n");
