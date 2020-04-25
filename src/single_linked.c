@@ -53,7 +53,7 @@ TYPED(List) * TYPED(init) (void) {
 
 static int display_f(TYPED(List) *list, int (*f) (TYPE)) {
     node temp = list->head;
-    while(temp != NULL && (f (temp->data))) {
+    while(temp != NULL) {
         if(f (temp->data)) {
             fprintf(stderr,"display::ERROR - display struct failed.\n");
             return 1;
@@ -362,7 +362,7 @@ int TYPED(merge) (TYPED(List) *a, TYPED(List) *b) {
     return 0;
 }
 
-TYPED(List) * TYPED(copy) (TYPED(List) *list) {
+TYPED(List) * TYPED(copy) (TYPED(List) *list, TYPE (*f) (TYPE)) {
     TYPED(List) *newList = NULL;
     if(list == NULL) {
         fprintf(stderr,"copy::ERROR - unitialized list.\n");
@@ -370,6 +370,20 @@ TYPED(List) * TYPED(copy) (TYPED(List) *list) {
     } else {
         newList = TYPED(init) ();
         node temp = list->head;
+        if(f == NULL) {
+            while(temp != NULL) {
+                TYPED(append) (newList, temp->data);
+                temp = temp->link;
+            }
+        } else {
+            TYPE copy = NULL;
+            while(temp != NULL) {
+                copy = f (temp->data);
+                if(copy == NULL) {
+                    return NULL;
+                } else {
+                    TYPED(append) (newList, copy);
+                    temp = temp->link;
         while(temp != NULL) {
             TYPED(append) (newList, temp->data);
             temp = temp->link;
@@ -379,13 +393,30 @@ TYPED(List) * TYPED(copy) (TYPED(List) *list) {
     return newList;
 }
 
-TYPED(List) * TYPED(arr2list) (TYPE* arr, TYPE size) {
+TYPED(List) * TYPED(arr2list) (TYPE* arr, int size, TYPE (*f) (TYPE)) {
+    TYPED(List) *newList = NULL;
+    if(size > 0) {
+        newList = TYPED(init) ();
+>>>>>>> 1bfbe4c... arr2list definition updated to manage array of structs
     TYPED(List) *newList = NULL;
     if(size > 0) {
         newList = TYPED(init) ();
         
-        for(int i = 0; i < size; i++) {
-            TYPED(append) (newList,arr[i]);
+        if(f == NULL) {
+            for(int i = 0; i < size; i++) {
+                TYPED(append) (newList,arr[i]);
+            }
+        } else {
+            TYPE copy = NULL;
+            for(int i = 0; i < size; i++) {
+                copy = f (arr[i]);
+                if(copy == NULL) {
+                    fprintf(stderr,"arr2list::ERROR - copy of struct failed.\n");
+                    return NULL;
+                } else {
+                    TYPED(append) (newList,copy);
+                }
+            }
         }
     } else {
         fprintf(stderr,"arr2list::WARNING - size must be greater than 0.\n");
