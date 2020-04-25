@@ -10,7 +10,7 @@ void test_create(void) {
 
 void test_insert(void) {
     List *list = init();
-    mag* arr_mag = calloc(40, sizeof(mag));
+    mag *arr_mag = calloc(40, sizeof(mag));
 
     for(int i = 30; i < 40; i++) {
         arr_mag[i] = create_mag(3);
@@ -45,7 +45,7 @@ void test_insert(void) {
 
 void test_delete(void) {
     List *list = init();
-    mag* arr_mag = calloc(10, sizeof(mag));
+    mag *arr_mag = calloc(10, sizeof(mag));
 
     for(int i = 0; i < 10; i++) {
         arr_mag[i] = create_mag(3);
@@ -78,7 +78,7 @@ void test_delete(void) {
 
 void test_size(void) {
     List *list = init();
-    mag* arr_mag = calloc(1000, sizeof(mag));
+    mag *arr_mag = calloc(1000, sizeof(mag));
 
 
     for(int i = 0; i < 1000; i++) {
@@ -94,21 +94,29 @@ void test_size(void) {
     free(arr_mag);
 }
 
-/*
 void test_search(void) {
     List *list = init();
+    mag *arr_mag = calloc(10, sizeof(mag));
+    mag fake_mag = create_mag(1);
+    fill_mag(fake_mag);
 
     for(int i = 0; i < 10; i++) {
-        append(list,i);
+        arr_mag[i] = create_mag(1);
+        fill_mag(arr_mag[i]);
+        append(list,arr_mag[i]);
     }
 
-    assert(-1 == search(list,11));
+    assert(-1 == search(list,fake_mag));
 
-    assert(8 == search(list,9));
+    assert(8 == search(list,arr_mag[9]));
 
-    destroy(list,NULL);
+    destroy(list,delete_mag);
+    
+    delete_mag(fake_mag);
+    free(arr_mag);
 }
 
+/*
 void test_reverse(void) {
     List *list = init();
 
@@ -214,9 +222,9 @@ int main(void) {
 
     test_size();
 
-/*
     test_search();
 
+/*
     test_reverse();
 
     test_merge();
