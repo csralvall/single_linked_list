@@ -36,42 +36,47 @@ void test_insert(void) {
         insert_pos(list,arr_mag[i],i);
     }
 
-    display(list,&(show_mag));
+    display(list,show_mag);
 
-    destroy(list,&(delete_mag));
+    destroy(list,delete_mag);
+
+    free(arr_mag);
+}
+
+void test_delete(void) {
+    List *list = init();
+    mag* arr_mag = calloc(10, sizeof(mag));
+
+    for(int i = 0; i < 10; i++) {
+        arr_mag[i] = create_mag(3);
+        fill_mag(arr_mag[i]);
+        append(list,arr_mag[i]);
+    }
+
+    display(list,show_mag);
+
+    for(int i = 1; i < 3; i++) {
+        remove_from(list,i,delete_mag);
+    }
+
+    display(list,show_mag);
+
+    for(int i = 0; i < 3; i++) {
+        remove_tail(list,delete_mag);
+    }
+
+    display(list,show_mag);
+
+    for(int i = 0; i < 2; i++) {
+        remove_head(list,delete_mag);
+    }
+
+    destroy(list,delete_mag);
 
     free(arr_mag);
 }
 
 /*
-void test_delete(void) {
-    List *list = init();
-
-    for(int i = 1; i < 10; i++) {
-        append(list,i);
-    }
-
-    display(list,NULL);
-
-    for(int i = 1; i < 3; i++) {
-        remove_from(list,i,NULL);
-    }
-
-    display(list,NULL);
-
-    for(int i = 0; i < 3; i++) {
-        remove_tail(list,NULL);
-    }
-
-    display(list,NULL);
-
-    for(int i = 0; i < 2; i++) {
-        remove_head(list,NULL);
-    }
-
-    destroy(list,NULL);
-}
-
 void test_size(void) {
     List *list = init();
 
@@ -199,9 +204,9 @@ int main(void) {
 
     test_insert();
 
-/*
     test_delete();
 
+/*
     test_size();
 
     test_search();
