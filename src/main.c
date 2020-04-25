@@ -181,31 +181,37 @@ void test_query(void) {
     free(arr_mag);
 }
 
-/*
 void test_copy(void) {
     List *list = init();
     List *tsil = NULL;
-    int val1 = -1;
-    int val2 = -1;
+    mag *arr_mag = calloc(10, sizeof(mag));
+    mag ret = NULL;
+    mag val1 = NULL;
+    mag val2 = NULL;
     
     for(int i = 1; i < 10; i++) {
-        append(list,i);
+        arr_mag[i] = create_mag(2);
+        fill_mag(arr_mag[i]);
+        append(list,arr_mag[i]);
     }
 
-    tsil = copy(list);
+    tsil = copy(list,copy_mag);
 
     while(empty(list)) {
         query(list,0,&val1);
         query(tsil,0,&val2);
         assert(val1 = val2);
-        remove_head(list,NULL);
-        remove_head(tsil,NULL);
+        remove_head(list,delete_mag);
+        remove_head(tsil,delete_mag);
     }
 
-    destroy(list,NULL);
-    destroy(tsil,NULL);
+    destroy(list,delete_mag);
+    destroy(tsil,delete_mag);
+
+    free(arr_mag);
 }
 
+/*
 void test_conversion(void) {
     int* arr = calloc(10, sizeof(int));
     List *list = NULL;
@@ -246,9 +252,9 @@ int main(void) {
 
     test_query();
 
-/*
     test_copy();
 
+/*
     test_conversion();
 */
 
