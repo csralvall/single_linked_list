@@ -253,11 +253,16 @@ int TYPED(merge) (TYPED(List) *a, TYPED(List) *b);
  * the nodes of the original list onto another list.
  *
  * @param list pointer to the list.
+ * @param f pointer to user defined function to copy TYPE struct.
+ * If TYPE refers to primitive C-types, just use NULL instead of f.
  * @return a pointer to the new list on success or NULL on failure.
+ * @warning if f fails, prints error and returns.
  * @warning if the list is unitialized prints error and returns.
+ * @note f should return a pointer to the copied struct on success
+ * and NULL on failure.
  * @note the user must check if the list is empty.
  */
-TYPED(List) * TYPED(copy) (TYPED(List) *list);
+TYPED(List) * TYPED(copy) (TYPED(List) *list, TYPE (*f) (TYPE));
 
 /**
  * @brief Transforms an array into a single linked list
