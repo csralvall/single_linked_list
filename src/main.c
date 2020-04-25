@@ -121,7 +121,7 @@ void test_reverse(void) {
     mag *arr_mag = calloc(10, sizeof(mag));
 
     for(int i = 0; i < 10; i++) {
-        arr_mag[i] = create_mag(1);
+        arr_mag[i] = create_mag(2);
         fill_mag(arr_mag[i]);
         prepend(list,arr_mag[i]);
     }
@@ -135,26 +135,32 @@ void test_reverse(void) {
     free(arr_mag);
 }
 
-/*
 void test_merge(void) {
     List *list = init();
     List *tsil = init();
+    mag *arr_mag = calloc(20, sizeof(mag));
 
     for(int i = 0; i < 10; i++) {
-        append(list,i);
+        arr_mag[i] = create_mag(2);
+        fill_mag(arr_mag[i]);
+        append(list,arr_mag[i]);
     }
 
     for(int i = 11; i < 20; i++) {
-        append(tsil,i);
+        arr_mag[i] = create_mag(2);
+        fill_mag(arr_mag[i]);
+        append(tsil,arr_mag[i]);
     }
 
     merge(list,tsil);
 
-    display(list,NULL);
+    display(list,show_mag);
 
-    destroy(list,NULL);
+    destroy(list,delete_mag);
+    free(arr_mag);
 }
 
+/*
 void test_query(void) {
     List *list = init();
     int ret = -1;
@@ -231,9 +237,9 @@ int main(void) {
 
     test_reverse();
 
-/*
     test_merge();
 
+/*
     test_query();
 
     test_copy();
