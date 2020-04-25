@@ -76,19 +76,25 @@ void test_delete(void) {
     free(arr_mag);
 }
 
-/*
 void test_size(void) {
     List *list = init();
+    mag* arr_mag = calloc(1000, sizeof(mag));
+
 
     for(int i = 0; i < 1000; i++) {
-        append(list,i);
+        arr_mag[i] = create_mag(1);
+        fill_mag(arr_mag[i]);
+        append(list,arr_mag[i]);
     }
 
     assert(1000 == size(list));
 
-    destroy(list,NULL);
+    destroy(list,delete_mag);
+
+    free(arr_mag);
 }
 
+/*
 void test_search(void) {
     List *list = init();
 
@@ -206,9 +212,9 @@ int main(void) {
 
     test_delete();
 
-/*
     test_size();
 
+/*
     test_search();
 
     test_reverse();
