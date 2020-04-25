@@ -256,7 +256,6 @@ int TYPED(merge) (TYPED(List) *a, TYPED(List) *b);
  * @param f pointer to user defined function to copy TYPE struct.
  * If TYPE refers to primitive C-types, just use NULL instead of f.
  * @return a pointer to the new list on success or NULL on failure.
- * @warning if f fails, prints error and returns.
  * @warning if the list is unitialized prints error and returns.
  * @note f should return a pointer to the copied struct on success
  * and NULL on failure.
@@ -272,10 +271,14 @@ TYPED(List) * TYPED(copy) (TYPED(List) *list, TYPE (*f) (TYPE));
  *
  * @param arr pointer to the beginning of the array.
  * @param size size of the array.
+ * @param f pointer to user defined function to copy TYPE struct.
+ * If TYPE refers to primitive C-types, just use NULL instead of f.
  * @return a pointer to the new list on success or NULL on failure.
+ * @note f should return a pointer to the copied struct on success
+ * and NULL on failure.
  * @note if the size provided is less than 0, prints warning and returns.
  */
-TYPED(List) * TYPED(arr2list) (TYPE *arr, int size);
+TYPED(List) * TYPED(arr2list) (TYPE *arr, int size, TYPE (*f) (TYPE));
 
 /**
  * @brief Destroys all the list.
