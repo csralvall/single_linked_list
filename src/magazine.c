@@ -30,6 +30,15 @@ void fill_mag(mag m) {
     }
 }
 
+mag copy_mag(mag m) {
+    mag new_m = create_mag(m->length);
+    for(int i = 0; i < (m->length); i++) {
+        new_m->pages[i] = m->pages[i];
+    }
+
+    return new_m;
+}
+
 int show_mag(mag m) {
     printf("[");
     for(int i = 0; i < (m->length); i++) {
