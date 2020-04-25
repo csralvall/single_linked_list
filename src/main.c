@@ -160,23 +160,28 @@ void test_merge(void) {
     free(arr_mag);
 }
 
-/*
 void test_query(void) {
     List *list = init();
-    int ret = -1;
+    mag *arr_mag = calloc(10, sizeof(mag));
+    mag ret = NULL;
 
     for(int i = 0; i < 10; i++) {
-        append(list,i);
+        arr_mag[i] = create_mag(2);
+        fill_mag(arr_mag[i]);
+        append(list,arr_mag[i]);
     }
 
     for(int i = 0; i < 10; i++) {
         query(list,i,&ret);
-        assert(ret == i);
+        assert(ret == arr_mag[i]);
     }
 
-    destroy(list,NULL);
+    destroy(list,delete_mag);
+
+    free(arr_mag);
 }
 
+/*
 void test_copy(void) {
     List *list = init();
     List *tsil = NULL;
@@ -239,9 +244,9 @@ int main(void) {
 
     test_merge();
 
-/*
     test_query();
 
+/*
     test_copy();
 
     test_conversion();
