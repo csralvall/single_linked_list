@@ -384,9 +384,8 @@ TYPED(List) * TYPED(copy) (TYPED(List) *list, TYPE (*f) (TYPE)) {
                 } else {
                     TYPED(append) (newList, copy);
                     temp = temp->link;
-        while(temp != NULL) {
-            TYPED(append) (newList, temp->data);
-            temp = temp->link;
+                }
+            }
         }
     }
     
@@ -405,7 +404,7 @@ TYPED(List) * TYPED(arr2list) (TYPE* arr, int size, TYPE (*f) (TYPE)) {
         } else {
             TYPE copy = NULL;
             for(int i = 0; i < size; i++) {
-                copy = f (arr[i]);
+                copy = (f (arr[i]));
                 if(copy == NULL) {
                     fprintf(stderr,"arr2list::ERROR - copy of struct failed.\n");
                     return NULL;
