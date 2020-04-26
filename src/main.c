@@ -145,7 +145,7 @@ void test_copy(void) {
         append(list,i);
     }
 
-    tsil = copy(list);
+    tsil = copy(list,NULL);
 
     while(empty(list)) {
         query(list,0,&val1);
