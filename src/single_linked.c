@@ -397,10 +397,6 @@ TYPED(List) * TYPED(arr2list) (TYPE* arr, int size, TYPE (*f) (TYPE)) {
     TYPED(List) *newList = NULL;
     if(size > 0) {
         newList = TYPED(init) ();
->>>>>>> 1bfbe4c... arr2list definition updated to manage array of structs
-    TYPED(List) *newList = NULL;
-    if(size > 0) {
-        newList = TYPED(init) ();
         
         if(f == NULL) {
             for(int i = 0; i < size; i++) {
