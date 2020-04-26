@@ -1,5 +1,5 @@
 # Single Linked List #
-*v2.1*
+*v2.2*
 
 
 ### What is this repository for? ###
@@ -18,8 +18,9 @@
     - With own made types you will need to:
         1. Define a function to print your struct, you will pass its address to the defined display function as argument.
         2. Define a function to free your struct, you will pass its address to the defined destroy function as argument, and to every "remove_something" function.
-        3. Define your struct with typedef to use only one word inside the macros.
-        4. Wrap your macro replacements in a new header, with the new defined struct included or defined inside.
+        3. Define a function to copy your struct, you will pass its address to the defined copy function as argument.
+        4. Define your struct with typedef to use only one word inside the macros.
+        5. Wrap your macro replacements in a new header, with the new defined struct included or defined inside.
 
 ```bash
 make all
