@@ -171,7 +171,7 @@ void test_conversion(void) {
         arr[i] = i;
     }
 
-    list = arr2list(arr, 10);
+    list = arr2list(arr, 10, NULL);
 
     display(list,NULL);
 
