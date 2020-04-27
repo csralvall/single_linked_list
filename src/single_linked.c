@@ -427,7 +427,6 @@ void TYPED(destroy) (TYPED(List) *list, int (*f) (TYPE)) {
     } else {
         while(!TYPED(empty) (list)) {
             TYPED(remove_head) (list,f);
-            list->size--;
         }
         free(list);
         list = NULL;
